@@ -1,0 +1,44 @@
+version: '3.7'
+services:
+  client:
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    volumes:
+      - ./client:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - server
+    networks:
+      egym:
+
+  server:
+    build:
+      context:  .
+      dockerfile: ./server/Dockerfile
+    environment:
+      - MYSQL_HOST=mysql
+    volumes:
+      - ./server:/app
+    ports:
+      - 3030:3030
+    links:
+      - mysql
+    networks:
+      egym:
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./server/migrations/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - TZ=American/New_York
+    networks:
+      egym:
+
+networks:
+  egym:

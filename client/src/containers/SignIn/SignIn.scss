@@ -1,0 +1,70 @@
+.egym-heading {
+    padding: 2rem;
+    text-align: center;
+
+    &__text {
+        font-size: $font-size-base * 1.5;
+        font-weight: $font-weight-bold;
+    }
+}
+
+.egym-section {
+    position: relative;
+    padding: 1rem;
+    margin-top: 1rem;
+
+    &__icon {
+        text-align: center;
+        position: absolute;
+        top: 1rem;
+        left: 50%;
+        margin-left: -3.125rem;
+
+        &--style {
+            width: 1em !important;
+            background-color: $white;
+            color: $tertiary;
+            border: none;
+            padding: 1.5rem;
+        }
+    }
+
+    &__form {
+        border: 1px solid $tertiary;
+        margin-top: 3rem;
+        padding: 5rem 3rem;
+        border-radius: .5rem;
+
+        &--input {
+            height: calc(2em + 1rem + 2px);
+            font-size: $font-size-base * 1;
+            border: none;
+            border-bottom: 1px solid $tertiary;
+            border-radius: 0;
+        }
+
+        &--icon {
+            border-radius: 0;
+            background-color: $white;
+            border: none;
+        }
+
+        &--color { color: $tertiary }
+
+        &--action { text-align: right; }
+
+        &--action-link {
+            float: left;
+        }
+
+        &--action-link-text {
+            font-size: $font-size-base * .8;
+        }
+
+        &--action-submit {
+            font-size: $font-size-base;
+            padding: .6rem 1.5rem;
+            border-radius: .4rem !important;
+        }
+    }
+}
