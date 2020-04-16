@@ -24,4 +24,4 @@ INSERT INTO `user`
 (`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`)
 VALUES
 ('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M')
-('Brandon', 'Stamour', 'brandon', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M');
+('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M');
