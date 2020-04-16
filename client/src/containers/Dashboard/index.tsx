@@ -11,6 +11,8 @@ import FindGyms from '../FindGyms';
 import SavedGyms from '../SavedGyms';
 import Profile from '../Profile';
 import ManageMembership from '../ManageMembership';
+import Schedule from '../Schedule';
+import DashboardContent from '../DashboardContent';
 
 import './Dashboard.scss';
 
@@ -27,17 +29,21 @@ interface DState {
 class Dashboard extends React.Component<DProps, DState> {
     state = {
         user: {} as User,
-        active: 'profile'
+        active: 'dashboard'
     };
 
     getMain = () => {
         switch (this.state.active) {
+            case 'dashboard':
+                return <DashboardContent />;
             case 'profile':
-              return <Profile />;
+                return <Profile />;
             case 'find_gyms':
-              return <FindGyms />;
+                return <FindGyms />;
             case 'saved_gyms':
-              return <SavedGyms />;
+                return <SavedGyms />;
+            case 'schedule':
+                return <Schedule />;
             case 'manage_membership':
                 return <ManageMembership />;
             default:
@@ -45,7 +51,7 @@ class Dashboard extends React.Component<DProps, DState> {
           }
     }
 
-    onUserMenuClick = (active: String) => {
+    onSideBarClick = (active: String) => {
         this.setState({ active });
     }
 
@@ -57,7 +63,7 @@ class Dashboard extends React.Component<DProps, DState> {
                 <NavigationBar />
                 <Row className="profile">
                     <Col md={3}>
-                        <SideBar active={this.state.active} handleUserMenuClick={this.onUserMenuClick} />
+                        <SideBar active={this.state.active} handleSideBarClick={this.onSideBarClick} />
                     </Col>
                     <Col md={9}>
                         {this.getMain()}
