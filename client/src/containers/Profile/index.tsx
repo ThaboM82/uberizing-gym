@@ -5,31 +5,30 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
 
-import './FindGyms.scss';
+import './Profile.scss';
 
-
-interface FGProps {
+interface PProps {
     currentUser?: CurrentUserState;
 }
 
-interface FGState {
+interface PState {
     currentUser?: CurrentUserState;
     user?: User;
 }
 
-class FindGyms extends React.Component<FGProps, FGState> {
+class Profile extends React.Component<PProps, PState> {
     state = {
-        user: {} as User,
+        user: {} as User
     };
 
     render() {
         const user = {...this.state.user};
         return (
             <Container>
-                Find Gyms
+                Profile
             </Container>
         )
     }
 }
 
-export default FindGyms;
+export default Profile;
