@@ -32,7 +32,7 @@ body {
 }
 .profile-usertitle-job {
 	text-transform: uppercase;
-	color: rgb(128, 128, 128);;
+	color: rgb(128, 128, 128);
 	font-size: 12px;
 	font-weight: 600;
 	margin-bottom: 15px;
@@ -64,16 +64,16 @@ body {
 				}
 				&:hover {
 					background-color: rgb(255, 255, 180);
-					color: rgb(128, 128, 128);;
+					color: rgb(128, 128, 128);
 				}
 			}
 		}
 		li.active {
 			border-bottom: none;
 			a {
-				color: rgb(128, 128, 128);;
+				color: rgb(128, 128, 128);
 				background-color: rgb(241, 195, 50);
-				border-left: 2px solid rgb(128, 128, 128);;
+				border-left: 2px solid rgb(128, 128, 128);
 				margin-left: -2px;
 			}
 		}
@@ -83,4 +83,15 @@ body {
 	padding: 20px;
 	background: #fff;
 	min-height: 460px;
+
+	.submit-button {
+		color: black;
+		background-color: rgb(241, 195, 50);
+		float: right;
+	}
+
+	.reset-button {
+		background-color: rgb(128, 128, 128);
+		float: right;
+	}
 }
