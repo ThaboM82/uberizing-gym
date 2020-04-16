@@ -25,7 +25,11 @@ class Profile extends React.Component<PProps, PState> {
         const user = {...this.state.user};
         return (
             <Container>
-                Profile
+                <Row>
+                    <Col>
+                        Name
+                    </Col>
+                </Row>
             </Container>
         )
     }

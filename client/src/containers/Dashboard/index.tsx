@@ -65,7 +65,7 @@ class Dashboard extends React.Component<DProps, DState> {
                     <Col md={3}>
                         <SideBar active={this.state.active} handleSideBarClick={this.onSideBarClick} />
                     </Col>
-                    <Col md={9}>
+                    <Col md={9} className="content">
                         {this.getMain()}
                     </Col>
                 </Row>
