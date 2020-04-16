@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Row, Col, Form, FormGroup, InputGroup, Button } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, InputGroup, Button } from 'react-bootstrap';
 
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
@@ -22,12 +22,9 @@ class Profile extends React.Component<PProps, PState> {
     };
 
     handleInputChange = (event: any) => {
-        const user = {...this.state.user};
-        const { name, value } = event.currentTarget;
     }
 
     handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        let user = {...this.state.user};
     }
 
     render() {

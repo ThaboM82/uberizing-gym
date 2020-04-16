@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';

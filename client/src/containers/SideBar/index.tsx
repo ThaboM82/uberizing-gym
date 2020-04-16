@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Row, Col, Nav, Button } from 'react-bootstrap';
+import { Container, Row, Col, Nav } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faDumbbell, faGlobe, faHome, faUser, faUserTie } from '@fortawesome/free-solid-svg-icons';
 
