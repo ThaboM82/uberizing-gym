@@ -59,6 +59,7 @@ Licensed under MIT
 	ul {
 		li {
 			border-bottom: 1px solid #f0f4f7;
+			cursor: pointer;
 			&:last-child {
 				border-bottom: none;
 			}

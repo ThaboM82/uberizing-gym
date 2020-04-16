@@ -5,6 +5,7 @@ import store from './store';
 
 import Home from './containers/Home';
 import SignIn from './containers/SignIn';
+import Dashboard from './containers/Dashboard';
 
 class App extends React.Component<{}, {}> {
   render() {
@@ -13,6 +14,7 @@ class App extends React.Component<{}, {}> {
         <Router>
           <Route path="/" exact component={Home} />
           <Route path="/sign-in" exact component={SignIn} />
+          <Route path="/dashboard" exact component={Dashboard} />
         </Router>
       </Provider>
     )

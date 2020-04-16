@@ -11,6 +11,8 @@ import './SideBar.scss';
 
 interface SBProps {
     currentUser?: CurrentUserState;
+    handleUserMenuClick: Function;
+    active: String;
 }
 
 interface SBState {
@@ -20,11 +22,16 @@ interface SBState {
 
 class SideBar extends React.Component<SBProps, SBState> {
     state = {
-        user: {} as User
+        user: {} as User,
     };
+
+    onUserMenuClick = (active: String) => {
+        this.props.handleUserMenuClick(active);
+    }
 
     render() {
         const user = {...this.state.user};
+        const active = this.props.active;
         return (
             <Container>
                 <div className="profile-sidebar">
@@ -45,20 +52,10 @@ class SideBar extends React.Component<SBProps, SBState> {
                     </div>
                     <div className="profile-usermenu">
                         <Nav className="flex-column" as="ul">
-                            <Nav.Item as="li" className="active">
-                                <Nav.Link as="a" href="#">
-                                    <Row>
-                                        <Col md={1}>
-                                            <FontAwesomeIcon icon={faHome} />
-                                        </Col>
-                                        <Col>
-                                            Dashboard
-                                        </Col>
-                                    </Row>
-                                </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item as="li">
-                                <Nav.Link as="a" href="#">
+                            <Nav.Item as="li"
+                            className={active === 'saved_gyms' ? ' active' : ''}
+                            onClick={()=> this.onUserMenuClick('saved_gyms') }>
+                                <Nav.Link as="a">
                                     <Row>
                                         <Col md={1}>
                                             <FontAwesomeIcon icon={faDumbbell} />
@@ -69,8 +66,10 @@ class SideBar extends React.Component<SBProps, SBState> {
                                     </Row>
                                 </Nav.Link>
                             </Nav.Item>
-                            <Nav.Item as="li">
-                                <Nav.Link as="a" href="#">
+                            <Nav.Item as="li"
+                            className={active === 'find_gyms' ? ' active' : ''}
+                            onClick={()=> this.onUserMenuClick('find_gyms') }>
+                                <Nav.Link as="a">
                                     <Row>
                                         <Col md={1}>
                                             <FontAwesomeIcon icon={faGlobe} />
@@ -81,8 +80,10 @@ class SideBar extends React.Component<SBProps, SBState> {
                                     </Row>
                                 </Nav.Link>
                             </Nav.Item>
-                            <Nav.Item as="li">
-                                <Nav.Link as="a" href="#">
+                            <Nav.Item as="li"
+                            className={active === 'manage_membership' ? ' active' : ''}
+                            onClick={()=> this.onUserMenuClick('manage_membership') }>
+                                <Nav.Link as="a">
                                     <Row>
                                         <Col md={1}>
                                             <FontAwesomeIcon icon={faUser} />
