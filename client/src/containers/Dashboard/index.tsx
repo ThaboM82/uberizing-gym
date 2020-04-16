@@ -14,7 +14,7 @@ import ManageMembership from '../ManageMembership';
 import Schedule from '../Schedule';
 import DashboardContent from '../DashboardContent';
 
-import './Dashboard.scss';
+import '../../utils/Style.scss';
 
 interface DProps {
     currentUser?: CurrentUserState;

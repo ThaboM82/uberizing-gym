@@ -7,7 +7,7 @@ import { faCalendarAlt, faDumbbell, faGlobe, faHome, faUser, faUserTie } from '@
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
 
-import './SideBar.scss';
+import '../../utils/Style.scss';
 
 interface SBProps {
     currentUser?: CurrentUserState;

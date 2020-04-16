@@ -5,7 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
 
-import './ManageMembership.scss';
+import '../../utils/Style.scss';
 
 interface MMProps {
     currentUser?: CurrentUserState;
