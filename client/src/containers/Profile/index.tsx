@@ -24,6 +24,10 @@ class Profile extends React.Component<PProps, PState> {
     handleInputChange = (event: any) => {
     }
 
+    handleReset = (event: any) => {
+
+    }
+
     handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     }
 
@@ -188,8 +192,8 @@ class Profile extends React.Component<PProps, PState> {
                     <Form.Row>
                         <Col></Col>
                         <Col>
-                            <Button type="submit" className="submit-button">Update</Button>
-                            <Button type="reset" className="reset-button">Cancel</Button>
+                            <Button className="submit-button">Update</Button>
+                            <Button className="reset-button" onClick={this.handleReset}>Cancel</Button>
                         </Col>
                     </Form.Row>
                 </Form>

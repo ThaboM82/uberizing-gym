@@ -1,61 +1,117 @@
 import React from 'react';
 
-import { Container } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, InputGroup, Button, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt, faThList } from '@fortawesome/free-solid-svg-icons';
 
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
-
-import ReactMapGL from 'react-map-gl';
+import Map from '../Map';
 
 import '../../utils/Style.scss';
-
-require('dotenv').config()
-const MAP_TOKEN = process.env.MAP_TOKEN;
 
 interface FGProps {
     currentUser?: CurrentUserState;
 }
 
-interface Viewport {
-    width: number;
-    height: number;
-    latitude: number;
-    longitude: number;
-    zoom: number;
-}
-
 interface FGState {
     currentUser?: CurrentUserState;
     user?: User;
-    viewport: Viewport;
+    map: Boolean;
 }
 
 class FindGyms extends React.Component<FGProps, FGState> {
     state = {
         user: {} as User,
-        viewport: {
-            width: 400,
-            height: 400,
-            latitude: 37.7577,
-            longitude: -122.4376,
-            zoom: 8
-        } as Viewport
+        map: true
     };
 
-    onViewportChange = (viewport: Viewport) => {
-        this.setState({viewport})
+    handleInputChange = (event: any) => {
+
+    }
+
+    toggleView = (map: boolean) => {
+        if (this.state.map !== map) {
+            this.setState({ map });
+        }
+    }
+
+    onSearch = (event: any) => {
+
+    }
+
+    onPinClick = (gym: any) => {
+
     }
 
     render() {
-        console.log(process.env);
         const user = {...this.state.user};
+        const map = this.state.map;
         return (
             <Container>
-                <ReactMapGL
-                    {...this.state.viewport}
-                    onViewportChange={this.onViewportChange}
-                    mapboxApiAccessToken={MAP_TOKEN}
-                />
+                <Form.Row>
+                    <Col>
+                        <FormGroup>
+                            <InputGroup>
+                                <Form.Control
+                                    type="text"
+                                    placeholder='Keyword e.g. gym name'
+                                    name='keywords'
+                                    onChange={this.handleInputChange}
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </Col>
+                    <Col>
+                        <FormGroup>
+                            <InputGroup>
+                                <Form.Control
+                                    type="text"
+                                    placeholder='Location'
+                                    name='location'
+                                    onChange={this.handleInputChange}
+                                />
+                            </InputGroup>
+                        </FormGroup>
+                    </Col>
+                    <Col md={2}>
+                        <Button className="submit-button" onClick={this.onSearch}>Search</Button>
+                    </Col>
+                </Form.Row>
+                <Form.Row>
+                    <Col>
+                        <b>Distance</b>
+                        <FormGroup>
+                            <InputGroup>
+
+                            </InputGroup>
+                        </FormGroup>
+                    </Col>
+                    <Col md={1} className="maplist-buttons">
+                        <Form.Row>
+                            <Col>
+                                <Nav.Item onClick={()=> this.toggleView(true)}>
+                                    <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
+                                </Nav.Item>
+                            </Col>
+                            <Col>
+                                <Nav.Item onClick={()=> this.toggleView(false)}>
+                                    <FontAwesomeIcon className="icon" icon={faThList} />
+                                </Nav.Item>
+                            </Col>
+                        </Form.Row>
+                    </Col>
+                </Form.Row>
+                <Form.Row>
+                    <Col>
+                        {map &&
+                            <Map onPinClick={this.onPinClick} />
+                        }
+                        {!map &&
+                            <div>list</div>
+                        }
+                    </Col>
+                </Form.Row>
             </Container>
         )
     }
