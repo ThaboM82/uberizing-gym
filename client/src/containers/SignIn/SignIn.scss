@@ -23,23 +23,24 @@
         &--style {
             width: 1em !important;
             background-color: $white;
-            color: $tertiary;
-            border: none;
+            color: $primary;
             padding: 1.5rem;
+            border: 1px solid $gray-400;
+            border-radius: 50%;
         }
     }
 
     &__form {
-        border: 1px solid $tertiary;
+        border: 1px solid $gray-400;
         margin-top: 3rem;
         padding: 5rem 3rem;
-        border-radius: .5rem;
+        border-radius: 0;
 
         &--input {
             height: calc(2em + 1rem + 2px);
             font-size: $font-size-base * 1;
             border: none;
-            border-bottom: 1px solid $tertiary;
+            border-bottom: 1px solid $primary;
             border-radius: 0;
         }
 
@@ -49,22 +50,22 @@
             border: none;
         }
 
-        &--color { color: $tertiary }
+        &--color { color: $primary }
 
         &--action { text-align: right; }
-
-        &--action-link {
-            float: left;
-        }
-
-        &--action-link-text {
-            font-size: $font-size-base * .8;
-        }
 
         &--action-submit {
             font-size: $font-size-base;
             padding: .6rem 1.5rem;
             border-radius: .4rem !important;
         }
+    }
+
+    &--short-menu {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 400;
+        font-size: $rfs-base-font-size + 1;
+        margin-top: .5rem;
     }
 }

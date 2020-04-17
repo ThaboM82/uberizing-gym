@@ -1,11 +1,6 @@
-import { CurrentUser } from "../../models/CurrentUser";
+import { CurrentUser } from '../../models/CurrentUser';
 import { LoginActions } from '../../actions/auth';
-
-interface UserLoginAction {
-  type: string;
-  payload: CurrentUser;
-  error: string;
-}
+import { AnyAction } from 'redux';
 
 export interface CurrentUserState {
   pending: boolean;
@@ -13,22 +8,8 @@ export interface CurrentUserState {
   error: string;
 }
 
-const initialState: CurrentUserState = {
-  pending: true,
-  currentUser: {
-    firstName: '',
-    lastName: '',
-    username: '',
-    email: '',
-    userType: '',
-    token: '',
-    isLoggedIn: false,
-  },
-  error: ''
-};
-
-export const userLoginReducer = (state = initialState, action: UserLoginAction) => {
-  switch(action.type) {
+export const userLoginReducer = (state: any = null, action: AnyAction) => {
+  switch (action.type) {
     case LoginActions.LOGIN_PENDING:
       return {
         ...state,
@@ -39,14 +20,16 @@ export const userLoginReducer = (state = initialState, action: UserLoginAction) 
         ...state,
         pending: false,
         currentUser: action.payload,
+        error: null,
       };
     case LoginActions.LOGIN_ERROR:
       return {
         ...state,
         pending: true,
+        currentUser: null,
         error: action.error,
       };
     default:
       return state;
   }
-}
+};
