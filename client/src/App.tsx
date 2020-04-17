@@ -13,10 +13,7 @@ class App extends React.Component<{}, {}> {
   render() {
     return (
       <Provider store={store}>
-        <PersistGate
-          persistor={persistor}
-          loading={null}
-        >
+        <PersistGate persistor={persistor} loading={null}>
           <Router>
             <Route path="/home" exact component={Home} />
             <Route path="/" exact component={SignIn} />
@@ -25,7 +22,7 @@ class App extends React.Component<{}, {}> {
           </Router>
         </PersistGate>
       </Provider>
-    )
+    );
   }
 }
 

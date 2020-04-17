@@ -1,5 +1,5 @@
-import { User } from "../../models/User";
-import { RegisterUserActionTypes } from "../../actions/user";
+import { User } from '../../models/User';
+import { RegisterUserActionTypes } from '../../actions/user';
 import { AnyAction } from 'redux';
 
 export interface RegisterUserState {
@@ -9,7 +9,7 @@ export interface RegisterUserState {
 }
 
 export const registerUserReducer = (state: any = null, action: AnyAction) => {
-  switch(action.type) {
+  switch (action.type) {
     case RegisterUserActionTypes.REGISTER_USER_PENDING:
       return {
         ...state,
@@ -32,4 +32,4 @@ export const registerUserReducer = (state: any = null, action: AnyAction) => {
     default:
       return state;
   }
-}
+};

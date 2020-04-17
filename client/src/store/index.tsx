@@ -5,18 +5,18 @@ import rootReducer from '../reducers';
 import thunkMiddleware from 'redux-thunk';
 
 const persistConfig = {
-    key: 'root',
-    storage,
+  key: 'root',
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(
-    persistedReducer,
-    compose(
-        applyMiddleware(thunkMiddleware),
-        //(window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-    )
+  persistedReducer,
+  compose(
+    applyMiddleware(thunkMiddleware),
+    //(window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  ),
 );
 
 const persistor = persistStore(store);
