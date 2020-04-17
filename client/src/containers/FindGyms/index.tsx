@@ -11,7 +11,7 @@ import Map from '../Map';
 import '../../utils/Style.scss';
 
 interface FGProps {
-    currentUser?: CurrentUserState;
+  currentUser?: CurrentUserState;
 }
 
 interface FGState {

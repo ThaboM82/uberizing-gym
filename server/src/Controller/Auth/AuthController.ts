@@ -1,4 +1,4 @@
-import { JsonController, Post, Body, NotFoundError } from 'routing-controllers';
+import { JsonController, Post, Body, NotFoundError, NotAcceptableError } from 'routing-controllers';
 import { IUserRepository } from '../../Interface/IUserRepository';
 import Container from 'typedi';
 import { UserRepository } from '../../Repository';
@@ -19,17 +19,25 @@ export class AuthController {
   }
 
   @Post('/login')
-  public async login(@Body() payload: LoginPayload): Promise<string> {
+  public async login(@Body() payload: LoginPayload): Promise<any> {
     if (!payload.username || !payload.password) {
-      throw new NotFoundError('Username or Password cannot be empty.');
+      throw new NotAcceptableError(`
+        <p>Username or Password cannot be empty.</p>
+        <p>Please provide valid username and password and then try again.</p>
+      `);
     }
 
     const user: User = await this.userQueryService.getUser(payload.username, payload.password);
-    const { firstName, lastName, username, userType, email } = user;
 
-    if (user) {
-      return TokenUtils.getToken({ firstName, lastName, username, userType, email });
+    if (!user) {
+      throw new NotFoundError(`
+        <p>User not found with given username and password.</p>
+        <p>If you are new to the system please sign up <a href='/sign-up'>here</a>.</p>
+      `);
     }
+
+    const { firstName, lastName, username, userType, email } = user;
+    return TokenUtils.getToken({ firstName, lastName, username, userType, email });
   }
 
   @Post('/verify-token')

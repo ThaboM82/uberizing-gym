@@ -1,23 +1,42 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { NavLink, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { CurrentUserState } from '../../reducers/auth';
+import logo from '../../static/logo.png';
+import Header from '../../components/Header';
 
-const NavigationBar: React.FC = () => {
-    return (
-        <Navbar collapseOnSelect expand='lg' className="navbar">
-            <Container>
-                <Navbar.Brand className="navbar__logo" as={NavLink} to='/'>Uberizing Gym</Navbar.Brand>
-                <Navbar.Toggle area-controls='responsive-navbar-nav' />
-                <Navbar.Collapse className='navbar__auth-nav justify-content-end' id='responsive-navbar-nav'>
-                    <Nav>
-                    <Nav.Link as={NavLink} className='navbar__auth-nav--item' to='/sign-in' exact>
-                        Sign In
-                    </Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    )
+interface NProps {
+  currentUser: CurrentUserState;
+  history: any;
 }
 
-export default NavigationBar;
+interface NState {
+  currentUser: CurrentUserState;
+}
+
+class Home extends React.Component<NProps, NState> {
+  logout = () => {
+    window.sessionStorage.removeItem('persist:root');
+    window.location.reload();
+  };
+
+  render() {
+    const currentUser = this.props.currentUser?.currentUser;
+    if (!currentUser?.isLoggedIn) {
+      return <Redirect to="/" />;
+    }
+
+    return (
+      <Container fluid>
+        <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
+      </Container>
+    );
+  }
+}
+
+const mapStateToProps = (state: NState) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps, {})(Home);
