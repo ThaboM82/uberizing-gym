@@ -11,49 +11,42 @@ import '../../utils/Style.scss';
 import 'react-calendar/dist/Calendar.css';
 
 interface SProps {
-    currentUser?: CurrentUserState;
+  currentUser?: CurrentUserState;
 }
 
 interface SState {
-    currentUser?: CurrentUserState;
-    user?: User;
-    date: Date;
+  currentUser?: CurrentUserState;
+  user?: User;
+  date: Date;
 }
 
 class Schedule extends React.Component<SProps, SState> {
-    state = {
-        user: {} as User,
-        date: new Date()
-    };
+  state = {
+    user: {} as User,
+    date: new Date(),
+  };
 
-    onChange = (date: Date) => {
-        this.setState({ date });
-    }
+  onChange = (date: Date) => {
+    this.setState({ date });
+  };
 
-    render() {
-        const user = {...this.state.user};
-        const date = this.state.date;
-        return (
-            <Container>
-                <Row>
-                    <Col>
-                        <Calendar
-                            onChange={this.onChange}
-                            value={date}
-                        />
-                    </Col>
-                    <Col>
-                        Selected date data
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        Upcoming events
-                    </Col>
-                </Row>
-            </Container>
-        )
-    }
+  render() {
+    const user = { ...this.state.user };
+    const date = this.state.date;
+    return (
+      <Container>
+        <Row>
+          <Col>
+            <Calendar onChange={this.onChange} value={date} />
+          </Col>
+          <Col>Selected date data</Col>
+        </Row>
+        <Row>
+          <Col>Upcoming events</Col>
+        </Row>
+      </Container>
+    );
+  }
 }
 
 export default Schedule;

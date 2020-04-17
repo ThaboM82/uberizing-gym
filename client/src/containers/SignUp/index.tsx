@@ -1,44 +1,53 @@
 import React from 'react';
 import { Container, Row, Col, Form, FormGroup, InputGroup, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { login } from '../../actions';
+import { registerUser } from '../../actions';
 import { CurrentUserState } from '../../reducers/auth';
+import { RegisterUserState } from '../../reducers/user';
 import logo from '../../static/logo.png';
 import { Link, Redirect } from 'react-router-dom';
+import { User } from '../../models/User';
 import ReactHtmlParser from 'react-html-parser';
 
 interface SIProps {
   currentUser?: CurrentUserState;
-  login: Function;
+  registerUser: Function;
+  registeredUser?: RegisterUserState;
   history: any;
 }
 
 interface SIState {
+  user: User;
+  registeredUser?: RegisterUserState;
   currentUser?: CurrentUserState;
-  username: string;
-  password: string;
   errorsVisible: boolean;
 }
 
 class SignIn extends React.Component<SIProps, SIState> {
   state = {
-    username: '',
-    password: '',
+    user: {} as User,
     errorsVisible: false,
   };
 
-  handleUserLoginChange = (event: any) => {
+  handleRegisterUserChange = (event: any) => {
     const { name, value } = event.currentTarget;
-    this.setState({ [name]: value } as SIState, () => {});
+    const user = { ...this.state.user };
+    if (name === 'username') {
+      user['username'] = value;
+    } else if (name === 'email') {
+      user['email'] = value;
+    } else if (name === 'password') {
+      user['password'] = value;
+    }
+    this.setState({ user } as SIState, () => this.state);
   };
 
-  handleSignInSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    const { username, password } = this.state;
-    this.props.login(username, password);
+  handleRegisterUserSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    this.props.registerUser(this.state.user);
     event.preventDefault();
-    if (this.props.currentUser?.error) {
+    if (this.props.registeredUser?.error) {
       this.setState({ errorsVisible: true });
     }
   };
@@ -46,10 +55,10 @@ class SignIn extends React.Component<SIProps, SIState> {
   dismissErrors = () => this.setState({ errorsVisible: false });
 
   render() {
-    const currentUser = this.props?.currentUser?.currentUser;
-    const error = this.props?.currentUser?.error ?? '';
-    if (currentUser?.isLoggedIn) {
-      return <Redirect to="/home" />;
+    const registeredUser = this.props?.registeredUser?.registeredUser;
+    const error = this.props?.registeredUser?.error ?? '';
+    if (registeredUser?.username) {
+      return <Redirect to="/" />;
     }
 
     return (
@@ -59,7 +68,7 @@ class SignIn extends React.Component<SIProps, SIState> {
             <div className="egym-heading">
               <img src={logo} alt="E Gym" />
               <h1 className="egym-heading__text" style={{ marginTop: 30 }}>
-                Members Login Portal
+                Members Registration Portal
               </h1>
             </div>
           </Col>
@@ -68,56 +77,52 @@ class SignIn extends React.Component<SIProps, SIState> {
           <Col lg={{ span: 6, offset: 3 }} className="justify-content-md-center">
             <div className="egym-section">
               <div className="egym-section__icon">
-                <FontAwesomeIcon className="egym-section__icon--style" icon={faUsers} size="6x" />
+                <FontAwesomeIcon className="egym-section__icon--style" icon={faUserPlus} size="6x" />
               </div>
-              <Form className="egym-section__form" onSubmit={this.handleSignInSubmit} noValidate>
+              <Form className="egym-section__form" onSubmit={this.handleRegisterUserSubmit} noValidate>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text className="egym-section__form--icon">
-                        <FontAwesomeIcon className="egym-section__form--color" icon={faUser}></FontAwesomeIcon>
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
                     <Form.Control
                       type="text"
                       className="egym-section__form--input"
-                      placeholder="Your Username or Email"
+                      placeholder="Your Username"
                       name="username"
-                      size="lg"
-                      onChange={this.handleUserLoginChange}
+                      onChange={this.handleRegisterUserChange}
                       autoFocus={true}
                     />
                   </InputGroup>
                 </FormGroup>
                 <FormGroup>
                   <InputGroup>
-                    <InputGroup.Prepend>
-                      <InputGroup.Text className="egym-section__form--icon">
-                        <FontAwesomeIcon className="egym-section__form--color" icon={faLock}></FontAwesomeIcon>
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
+                    <Form.Control
+                      type="email"
+                      className="egym-section__form--input"
+                      placeholder="Your Email"
+                      name="email"
+                      onChange={this.handleRegisterUserChange}
+                    />
+                  </InputGroup>
+                </FormGroup>
+                <FormGroup>
+                  <InputGroup>
                     <Form.Control
                       type="password"
                       className="egym-section__form--input"
                       placeholder="Your Password"
                       name="password"
-                      size="lg"
-                      onChange={this.handleUserLoginChange}
+                      onChange={this.handleRegisterUserChange}
                     />
                   </InputGroup>
                 </FormGroup>
                 <div className="egym-section__form--action">
                   <Button type="submit" className="egym-section__form--action-submit">
-                    Sign In
+                    Register
                   </Button>
                 </div>
               </Form>
               <div className="egym-section--short-menu">
                 <p>
-                  New here: <Link to="/sign-up">Register</Link>
-                </p>
-                <p>
-                  <Link to="/sign-up">Forgot Password</Link>
+                  Already a member: <Link to="/">Sign In</Link>
                 </p>
               </div>
             </div>
@@ -139,6 +144,7 @@ class SignIn extends React.Component<SIProps, SIState> {
 
 const mapStateToProps = (state: SIState) => ({
   currentUser: state.currentUser,
+  registeredUser: state.registeredUser,
 });
 
-export default connect(mapStateToProps, { login })(SignIn);
+export default connect(mapStateToProps, { registerUser })(SignIn);
