@@ -8,8 +8,11 @@ services:
       - ./client/src/:/app/src/
       - ./client/public/:/app/public/
       - ./client/package.json:/app/package.json
+      - ./client/package-lock.json:/app/package-lock.json
       - ./client/yarn.lock:/app/yarn.lock
       - ./client/tsconfig.json:/app/tsconfig.json
+      - ./client/.eslintrc.js:/app/.eslintrc.js
+      - ./client/.prettierrc.js:/app/.prettierrc.js
     ports:
       - 3000:3000
     depends_on:

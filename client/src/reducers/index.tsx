@@ -3,7 +3,7 @@ import { registerUserReducer } from './user';
 import { userLoginReducer } from './auth';
 
 const rootReducer = combineReducers({
-    registerUser: registerUserReducer,
+    registeredUser: registerUserReducer,
     currentUser: userLoginReducer,
 });
 
