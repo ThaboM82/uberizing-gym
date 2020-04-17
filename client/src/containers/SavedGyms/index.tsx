@@ -11,7 +11,7 @@ import Map from '../Map';
 import '../../utils/Style.scss';
 
 interface SGProps {
-    currentUser?: CurrentUserState;
+  currentUser?: CurrentUserState;
 }
 
 interface SGState {

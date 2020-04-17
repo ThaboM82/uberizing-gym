@@ -8,27 +8,23 @@ import { User } from '../../models/User';
 import '../../utils/Style.scss';
 
 interface DCProps {
-    currentUser?: CurrentUserState;
+  currentUser?: CurrentUserState;
 }
 
 interface DCState {
-    currentUser?: CurrentUserState;
-    user?: User;
+  currentUser?: CurrentUserState;
+  user?: User;
 }
 
 class DashboardContent extends React.Component<DCProps, DCState> {
-    state = {
-        user: {} as User
-    };
+  state = {
+    user: {} as User,
+  };
 
-    render() {
-        const user = {...this.state.user};
-        return (
-            <Container>
-                Dashboard
-            </Container>
-        )
-    }
+  render() {
+    const user = { ...this.state.user };
+    return <Container>Dashboard</Container>;
+  }
 }
 
 export default DashboardContent;

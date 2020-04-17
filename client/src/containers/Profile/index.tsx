@@ -8,21 +8,20 @@ import { User } from '../../models/User';
 import '../../utils/Style.scss';
 
 interface PProps {
-    currentUser?: CurrentUserState;
+  currentUser?: CurrentUserState;
 }
 
 interface PState {
-    currentUser?: CurrentUserState;
-    user?: User;
+  currentUser?: CurrentUserState;
+  user?: User;
 }
 
 class Profile extends React.Component<PProps, PState> {
-    state = {
-        user: {} as User
-    };
+  state = {
+    user: {} as User,
+  };
 
-    handleInputChange = (event: any) => {
-    }
+  handleInputChange = (event: any) => {};
 
     handleReset = (event: any) => {
 
