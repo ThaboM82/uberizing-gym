@@ -1,11 +1,7 @@
 import React from 'react';
-
 import { Container, Col, Form, FormGroup, InputGroup, Button } from 'react-bootstrap';
-
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
-
-import '../../utils/Style.scss';
 
 interface PProps {
   currentUser?: CurrentUserState;

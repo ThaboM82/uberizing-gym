@@ -1,21 +1,10 @@
 import React from 'react';
-
 import { Container, Row, Col } from 'react-bootstrap';
-
 import { CurrentUserState } from '../../reducers/auth';
-import { User } from '../../models/User';
-
-import NavigationBar from '../Home';
-import SideBar from '../SideBar';
-import FindGyms from '../FindGyms';
-import SavedGyms from '../SavedGyms';
-import Profile from '../Profile';
-import ManageMembership from '../ManageMembership';
-import Schedule from '../Schedule';
-import DashboardContent from '../DashboardContent';
-
-import '../../utils/Style.scss';
+import SideBar from '../../components/SideBar';
 import Header from '../../components/Header';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 interface DProps {
   currentUser?: CurrentUserState;
@@ -24,51 +13,23 @@ interface DProps {
 
 interface DState {
   currentUser?: CurrentUserState;
-  user?: User;
-  active: string;
 }
 
 class Dashboard extends React.Component<DProps, DState> {
-  state = {
-    user: {} as User,
-    active: 'dashboard',
-  };
-
-  getMain = () => {
-    switch (this.state.active) {
-      case 'dashboard':
-        return <DashboardContent />;
-      case 'profile':
-        return <Profile />;
-      case 'find_gyms':
-        return <FindGyms />;
-      case 'saved_gyms':
-        return <SavedGyms />;
-      case 'schedule':
-        return <Schedule />;
-      case 'manage_membership':
-        return <ManageMembership />;
-      default:
-        return undefined;
-    }
-  };
-
-  onSideBarClick = (active: string) => {
-    this.setState({ active });
-  };
-
   render() {
-    const user = { ...this.state.user };
+    const currentUser = this.props?.currentUser?.currentUser;
+    if (!currentUser?.isLoggedIn) {
+      return <Redirect to='/' />;
+    }
 
     return (
       <Container fluid>
         <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
         <Row className="profile">
-          <Col md={3}>
-            <SideBar active={this.state.active} handleSideBarClick={this.onSideBarClick} />
+          <Col lg={3} sm={12}>
+            <SideBar />
           </Col>
-          <Col md={9} className="content">
-            {this.getMain()}
+          <Col lg={9} sm={12} className="content">
           </Col>
         </Row>
       </Container>
@@ -76,4 +37,8 @@ class Dashboard extends React.Component<DProps, DState> {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state: DState) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps, {})(Dashboard);

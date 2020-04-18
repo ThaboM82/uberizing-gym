@@ -1,11 +1,6 @@
 .egym-heading {
     padding: 2rem;
     text-align: center;
-
-    &__text {
-        font-size: $font-size-base * 1.5;
-        font-weight: $font-weight-bold;
-    }
 }
 
 .egym-section {
@@ -57,7 +52,7 @@
         &--action-submit {
             font-size: $font-size-base;
             padding: .6rem 1.5rem;
-            border-radius: .4rem !important;
+            border-radius: 0;
         }
     }
 
