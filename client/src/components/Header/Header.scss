@@ -1,0 +1,18 @@
+.navbar {
+  background-color: $gray-400;
+
+  &__logo {
+      font-family: 'Open Sans', cursive, sans-serif;
+      font-size: $font-size-base * 1.5;
+      color: #7a6a53 !important;
+      font-weight: 700;
+  }
+
+  &__auth-nav {
+      &--item {
+          font-weight: bold;
+          font-size: $font-size-base * .8;
+          color: $black !important;
+      }
+  }
+}

@@ -39,7 +39,7 @@ class SignIn extends React.Component<SIProps, SIState> {
     this.props.login(username, password);
     event.preventDefault();
     if (this.props.currentUser?.error) {
-      this.setState({ errorsVisible: true });
+      this.setState({ errorsVisible: true }, () => this.state);
     }
   };
 
@@ -49,7 +49,7 @@ class SignIn extends React.Component<SIProps, SIState> {
     const currentUser = this.props?.currentUser?.currentUser;
     const error = this.props?.currentUser?.error ?? '';
     if (currentUser?.isLoggedIn) {
-      return <Redirect to="/home" />;
+      return <Redirect to="/dashboard" />;
     }
 
     return (
