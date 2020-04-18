@@ -1,14 +1,9 @@
 import React from 'react';
-
 import { Container } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import { Viewport } from '../../utils/interfaces';
-
 import ReactMapGL from 'react-map-gl';
-
-require('dotenv').config()
-
-const MAP_TOKEN = process.env.REACT_APP_MAP_TOKEN;
+import { mapToken } from '../../utils/config';
 
 interface MProps {
     currentUser?: CurrentUserState;
@@ -29,14 +24,14 @@ class Map extends React.Component<MProps, MState> {
             zoom: 12
         } as Viewport
     }
-    
+
     render () {
         return (
             <Container>
                 <ReactMapGL
                     {...this.state.viewport}
                     onViewportChange={(viewport) => this.setState({viewport})}
-                    mapboxApiAccessToken={MAP_TOKEN}
+                    mapboxApiAccessToken={mapToken}
                     mapStyle="mapbox://styles/mapbox/dark-v9"
                 />
             </Container>

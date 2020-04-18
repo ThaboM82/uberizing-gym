@@ -48,7 +48,7 @@ class SignIn extends React.Component<SIProps, SIState> {
     this.props.registerUser(this.state.user);
     event.preventDefault();
     if (this.props.registeredUser?.error) {
-      this.setState({ errorsVisible: true });
+      this.setState({ errorsVisible: true }, () => this.state);
     }
   };
 

@@ -22,14 +22,21 @@ $h3-font-size: $font-size-base * 1.2;
 $h4-font-size: $font-size-base * 1;
 $h5-font-size: $font-size-base * .9;
 $h6-font-size: $font-size-base * .8;
+
+.container-fluid {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 @import "../node_modules/bootstrap/scss/variables";
 
 // Components SCSS Styles
+@import "./components/Header/Header.scss";
+@import "./components/SideBar/SideBar.scss";
 
 
 // Containers SCSS Styles
 @import "./containers/SignIn/SignIn.scss";
-@import "./containers/Home/Home.scss";
 
 @import "./App.scss";

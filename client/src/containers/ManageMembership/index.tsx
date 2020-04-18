@@ -1,29 +1,33 @@
 import React from 'react';
-
-import { Container } from 'react-bootstrap';
-
+import { Container, Row, Col } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
-import { User } from '../../models/User';
-
-import '../../utils/Style.scss';
+import Header from '../../components/Header';
+import SideBar from '../../components/SideBar';
 
 interface MMProps {
   currentUser?: CurrentUserState;
+  history: any;
 }
 
 interface MMState {
   currentUser?: CurrentUserState;
-  user?: User;
 }
 
 class ManageMembership extends React.Component<MMProps, MMState> {
-  state = {
-    user: {} as User,
-  };
-
   render() {
-    const user = { ...this.state.user };
-    return <Container>Manage Membership</Container>;
+    return (
+      <Container fluid>
+        <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
+        <Row className="profile">
+          <Col lg={3} sm={12}>
+            <SideBar />
+          </Col>
+          <Col lg={9} sm={12} className="content">
+            Dashboard
+          </Col>
+        </Row>
+      </Container>
+    )
   }
 }
 

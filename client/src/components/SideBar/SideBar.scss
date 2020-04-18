@@ -1,0 +1,87 @@
+.egym-sidebar-profile {
+  border: 1px solid $gray-400;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+
+  &__avatar {
+    border: 2px solid $gray-400;
+	  margin-bottom: 1rem;
+  }
+
+  &__username {
+    margin-bottom: 1.5rem;
+  }
+
+  &__logout {
+    background-color: $white;
+    border: none;
+    border-radius: 0;
+    font-size: .9rem;
+    padding: .3rem;
+
+    &:hover {
+      background-color: $white;
+      color: $gray-600;
+    }
+  }
+
+  &__view-profile {
+    font-size: 1rem;
+    background-color: $gray-400;
+    color: $white;
+    margin-right: .5rem;
+    padding: .3rem .8rem;
+
+    &:hover {
+      text-decoration: none;
+      color: $gray-600;
+    }
+  }
+
+  &__update-profile {
+    font-size: 1rem;
+    background-color: $primary;
+    color: $white;
+    padding: .3rem .8rem;
+
+    &:hover {
+      text-decoration: none;
+      background-color: $gray-600;
+      color: $primary;
+    }
+  }
+}
+
+.egym-sidebar-menu {
+  border: 1px solid $gray-400;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0;
+  height: 100vh;
+
+  &__header {
+    padding: 1.2rem;
+    font-weight: 700;
+    background-color: $gray-100;
+    margin: 0;
+  }
+
+  &__item {
+    padding: 1rem;
+    border-bottom: 1px solid $gray-200;
+    color: $gray-500;
+    padding-left: 1.5rem;
+
+    &:hover {
+      background-color: $secondary;
+    }
+  }
+
+  &__active {
+    background-color: $primary;
+    color: $white;
+  }
+}

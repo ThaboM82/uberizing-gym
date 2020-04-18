@@ -1,28 +1,24 @@
 import React from 'react';
-
-import { Container, Col, Form, FormGroup, InputGroup, Button, Nav } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, InputGroup, Button, Nav, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faThList } from '@fortawesome/free-solid-svg-icons';
-
 import { CurrentUserState } from '../../reducers/auth';
-import { User } from '../../models/User';
 import Map from '../Map';
-
-import '../../utils/Style.scss';
+import Header from '../../components/Header';
+import SideBar from '../../components/SideBar';
 
 interface FGProps {
   currentUser?: CurrentUserState;
+  history: any;
 }
 
 interface FGState {
     currentUser?: CurrentUserState;
-    user?: User;
     map: Boolean;
 }
 
 class FindGyms extends React.Component<FGProps, FGState> {
     state = {
-        user: {} as User,
         map: true
     };
 
@@ -45,10 +41,15 @@ class FindGyms extends React.Component<FGProps, FGState> {
     }
 
     render() {
-        const user = {...this.state.user};
         const map = this.state.map;
         return (
-            <Container>
+            <Container fluid>
+                <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
+                <Row className="profile">
+                <Col lg={3} sm={12}>
+                    <SideBar />
+                </Col>
+                <Col lg={9} sm={12} className="content">
                 <Form.Row>
                     <Col>
                         <FormGroup>
@@ -112,6 +113,8 @@ class FindGyms extends React.Component<FGProps, FGState> {
                         }
                     </Col>
                 </Form.Row>
+                </Col>
+                </Row>
             </Container>
         )
     }
