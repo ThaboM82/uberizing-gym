@@ -24,7 +24,8 @@ INSERT INTO `user`
 (`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`)
 VALUES
 ('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M'),
-('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M');
+('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M'),
+('Laurel', 'Fielding', 'lfielding', 'password', 'GYM_MEMBER', 'lfieldin@gmu.edu', '1990-12-12', '1234567890', 'F');
 
 DROP TABLE IF EXISTS `gym`;
 CREATE TABLE `gym` (
@@ -61,3 +62,110 @@ VALUES
 ("Gold's Gym", '6940-A Bradlick Shopping Center', 'Annandale', 'VA', '22003', 38.813485, -77.184011),
 ("Gold's Gym", '5620-A Ox Rd', 'Fairfax Station', 'VA', '22039', 38.801119, -77.327381),
 ("Gold's Gym", '7700 Gunston Plaza', 'Lorton', 'VA', '22079', 38.705415, -77.207101);
+
+DROP TABLE IF EXISTS `saved_gym`;
+CREATE TABLE `saved_gym` (
+  `id` INT AUTO_INCREMENT PRIMARY KEY,
+  `user` INT NOT NULL,
+  `gym` INT NOT NULL,
+  FOREIGN KEY (`user`) REFERENCES `user`(`id`),
+  FOREIGN KEY (`gym`) REFERENCES `gym`(`id`)
+);
+
+INSERT INTO `saved_gym`
+(`user`, `gym`)
+VALUES
+(1,1), (1,2), (1,3), (1,7), (1,8), (1,12), (1,13), (1,14), (1,15),
+(2,1), (2,4), (2,5), (2,7), (2,9), (2,10), (2,12), (2,16), (2,17), (2,18),
+(3,1), (3,6), (3,7), (3,11), (3,12), (3,19), (3,20);
+
+DROP TABLE IF EXISTS `gym_event`;
+CREATE TABLE `gym_event` (
+   `id` INT AUTO_INCREMENT PRIMARY KEY,
+   `gym` INT NOT NULL,
+   `start` DATETIME NOT NULL,
+   `end` DATETIME NOT NULL,
+   `title` VARCHAR(50) NOT NULL,
+   `description` VARCHAR(250) NOT NULL,
+   FOREIGN KEY (gym) REFERENCES gym(id)
+);
+
+INSERT INTO `gym_event`
+(`gym`, `start`, `end`, `title`, `description`)
+VALUES
+(1, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(2, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(3, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(4, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(5, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(6, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(7, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(8, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(9, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(10, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!'),
+(11, '2020-04-01 10:00:00', '2020-05-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(12, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(13, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(14, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(15, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(16, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(17, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(18, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(19, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(20, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!'),
+(20, '2020-04-01 10:00:00', '2020-05-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(19, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(18, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(17, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(16, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(15, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(14, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(13, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(12, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(11, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!'),
+(10, '2020-04-01 10:00:00', '2020-05-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(9, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(8, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(7, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(6, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(5, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(4, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(3, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(2, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(1, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!'),
+(10, '2020-04-01 10:00:00', '2020-05-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(9, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(8, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(7, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(6, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(5, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(4, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(3, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(2, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(1, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!'),
+(20, '2020-04-01 10:00:00', '2020-05-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
+(19, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
+(18, '2020-04-01 10:10:00', '2020-04-03 10:00:00', 'Host a Charity Event', 'Find a charity in your community that you would like to support and host a paid work out session where half the proceeds go to those in need and the other goes to cover fundraising expenses.'),
+(17, '2020-04-01 08:00:00', '2020-04-02 10:00:00', 'All Nighter Work Out', 'Host an all-nighter workout class at your gym to attract hardcore gym goers, and persuade them to join your gym.'),
+(16, '2020-04-02 10:00:00', '2020-04-02 08:00:00', 'Fitness Trainer Workshop', 'Take an educational approach and host a fitness trainer workshop at your gym.'),
+(15, '2020-04-10 10:00:00', '2020-04-10 10:00:00', 'Celebrate Client Success', 'Invite current members and people in your community to share success stories as you help to celebrate their accomplishments.'),
+(14, '2020-04-25 10:00:00', '2020-04-26 06:00:00', 'Walkathon Challenge', 'Whether you are a hardcore fitness expert or someone is looking for a fun event to attend, everyone loves walkathons.'),
+(13, '2020-05-01 10:00:00', '2020-05-01 10:00:00', 'Free Gym For All', 'Host an event where people can use your gym and attend classes for free for one night or a week.'),
+(12, '2020-05-09 06:00:00', '2020-05-09 10:00:00', 'Obstacle Course Competition', 'Transform your gym or rent a large space and turn it into the ultimate fitness obstacle course.'),
+(11, '2020-05-16 10:00:00', '2020-05-17 10:00:00', 'Mass Workout Meet & Greet', 'Find a park or public space and host a mass workout meet and greet!');
+
+DROP TABLE IF EXISTS `user_event`;
+CREATE TABLE `user_event` (
+   `id` INT AUTO_INCREMENT PRIMARY KEY,
+   `user` INT NOT NULL,
+   `event` INT NOT NULL,
+   FOREIGN KEY (`user`) REFERENCES `user`(`id`),
+   FOREIGN KEY (`event`) REFERENCES `gym_event`(`id`)
+);
+
+INSERT INTO `user_event`
+(`user`, `event`)
+VALUES
+(1,1), (1,2), (1,3), (1,7), (1,8), (1,12), (1,13), (1,14), (1,15),
+(2,1), (2,4), (2,5), (2,7), (2,9), (2,10), (2,12), (2,16), (2,17), (2,18),
+(3,1), (3,6), (3,7), (3,11), (3,12), (3,19), (3,20);
