@@ -1,7 +1,7 @@
 import React from 'react';
-import { Nav, Card, Image, Button } from 'react-bootstrap';
+import { Nav, Card, Image, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCalendarAlt, faDumbbell, faHome, faIdCard, faRunning, faPersonBooth } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faDumbbell, faHome, faIdCard, faRunning, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserState } from '../../reducers/auth';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
@@ -43,28 +43,40 @@ class SideBar extends React.Component<SBProps, SBState> {
         <Nav className='flex-column egym-sidebar-menu'>
           <Nav.Link as='h3' className='flex-column egym-sidebar-menu__header'>MENU</Nav.Link>
           <Nav.Link as={NavLink} to='/dashboard' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faHome} />
-            <span style={{ marginLeft: 10 }}>Dashboard</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faHome} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>Dashboard</span></Col>
+            </Row>
           </Nav.Link>
           <Nav.Link as={NavLink} to='/find-gym' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faDumbbell} />
-            <span style={{ marginLeft: 10 }}>Find Gym</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faSearch} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>Find Gym</span></Col>
+            </Row>
           </Nav.Link>
           <Nav.Link as={NavLink} to='/saved-gyms' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faPersonBooth} />
-            <span style={{ marginLeft: 10 }}>Saved Gyms</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faDumbbell} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>Saved Gyms</span></Col>
+            </Row>
           </Nav.Link>
           <Nav.Link as={NavLink} to='/my-schedule' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faCalendarAlt} />
-            <span style={{ marginLeft: 10 }}>My Schedule</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faCalendarAlt} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>My Schedule</span></Col>
+            </Row>
           </Nav.Link>
           <Nav.Link as={NavLink} to='/my-activities' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faRunning} />
-            <span style={{ marginLeft: 10 }}>My Activities</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faRunning} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>My Activities</span></Col>
+            </Row>
           </Nav.Link>
           <Nav.Link as={NavLink} to='/manage-membership' className='flex-column egym-sidebar-menu__item' activeClassName='flex-column egym-sidebar-menu__active'>
-            <FontAwesomeIcon icon={faIdCard} />
-            <span style={{ marginLeft: 10 }}>Manage Memebership</span>
+            <Row>
+              <Col md={1}><FontAwesomeIcon icon={faIdCard} /></Col>
+              <Col><span style={{ marginLeft: 10 }}>Manage Memebership</span></Col>
+            </Row>
           </Nav.Link>
         </Nav>
       </React.Fragment>
