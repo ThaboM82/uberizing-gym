@@ -5,8 +5,8 @@ export class GymEvent {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  gym: number;
+  @Column({ name: 'gym_id' })
+  gymId: number;
 
   @Column()
   start: string;

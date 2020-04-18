@@ -5,9 +5,9 @@ export class UserEvent {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  user: number;
+  @Column({ name: 'user_id' })
+  userId: number;
 
-  @Column()
-  event: number;
+  @Column({ name: 'event_id' })
+  eventId: number;
 }

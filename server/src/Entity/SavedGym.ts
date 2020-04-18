@@ -5,9 +5,9 @@ export class SavedGym {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  user: number;
+  @Column({ name: 'user_id' })
+  userId: number;
 
-  @Column()
-  gym: number;
+  @Column({ name: 'gym_id' })
+  gymId: number;
 }
