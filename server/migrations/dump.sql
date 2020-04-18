@@ -66,14 +66,14 @@ VALUES
 DROP TABLE IF EXISTS `saved_gym`;
 CREATE TABLE `saved_gym` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
-  `user` INT NOT NULL,
-  `gym` INT NOT NULL,
-  FOREIGN KEY (`user`) REFERENCES `user`(`id`),
-  FOREIGN KEY (`gym`) REFERENCES `gym`(`id`)
+  `user_id` INT NOT NULL,
+  `gym_id` INT NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+  FOREIGN KEY (`gym_id`) REFERENCES `gym`(`id`)
 );
 
 INSERT INTO `saved_gym`
-(`user`, `gym`)
+(`user_id`, `gym_id`)
 VALUES
 (1,1), (1,2), (1,3), (1,7), (1,8), (1,12), (1,13), (1,14), (1,15),
 (2,1), (2,4), (2,5), (2,7), (2,9), (2,10), (2,12), (2,16), (2,17), (2,18),
@@ -82,16 +82,16 @@ VALUES
 DROP TABLE IF EXISTS `gym_event`;
 CREATE TABLE `gym_event` (
    `id` INT AUTO_INCREMENT PRIMARY KEY,
-   `gym` INT NOT NULL,
+   `gym_id` INT NOT NULL,
    `start` DATETIME NOT NULL,
    `end` DATETIME NOT NULL,
    `title` VARCHAR(50) NOT NULL,
    `description` VARCHAR(250) NOT NULL,
-   FOREIGN KEY (gym) REFERENCES gym(id)
+   FOREIGN KEY (`gym_id`) REFERENCES `gym`(`id`)
 );
 
 INSERT INTO `gym_event`
-(`gym`, `start`, `end`, `title`, `description`)
+(`gym_id`, `start`, `end`, `title`, `description`)
 VALUES
 (1, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Health & Food Fair', 'Reach out to fitness brands in the food industry, especially those looking to expand their market, and host a health and fitness food fair.'),
 (2, '2020-04-01 10:00:00', '2020-04-07 10:00:00', 'Family Workout Session', 'Make it a family affair and invite family members to come out and do group workout sessions separate or together.'),
@@ -157,14 +157,14 @@ VALUES
 DROP TABLE IF EXISTS `user_event`;
 CREATE TABLE `user_event` (
    `id` INT AUTO_INCREMENT PRIMARY KEY,
-   `user` INT NOT NULL,
-   `event` INT NOT NULL,
-   FOREIGN KEY (`user`) REFERENCES `user`(`id`),
-   FOREIGN KEY (`event`) REFERENCES `gym_event`(`id`)
+   `user_id` INT NOT NULL,
+   `event_id` INT NOT NULL,
+   FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+   FOREIGN KEY (`event_id`) REFERENCES `gym_event`(`id`)
 );
 
 INSERT INTO `user_event`
-(`user`, `event`)
+(`user_id`, `event_id`)
 VALUES
 (1,1), (1,2), (1,3), (1,7), (1,8), (1,12), (1,13), (1,14), (1,15),
 (2,1), (2,4), (2,5), (2,7), (2,9), (2,10), (2,12), (2,16), (2,17), (2,18),
