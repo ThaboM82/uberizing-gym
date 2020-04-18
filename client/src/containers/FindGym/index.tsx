@@ -6,6 +6,8 @@ import { CurrentUserState } from '../../reducers/auth';
 import Map from '../Map';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -17,7 +19,7 @@ interface FGState {
     map: Boolean;
 }
 
-class FindGyms extends React.Component<FGProps, FGState> {
+class FindGym extends React.Component<FGProps, FGState> {
     state = {
         map: true
     };
@@ -42,6 +44,11 @@ class FindGyms extends React.Component<FGProps, FGState> {
 
     render() {
         const map = this.state.map;
+        const currentUser = this.props?.currentUser?.currentUser;
+        if (!currentUser?.isLoggedIn) {
+            return <Redirect to='/' />;
+        }
+
         return (
             <Container fluid>
                 <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
@@ -120,4 +127,8 @@ class FindGyms extends React.Component<FGProps, FGState> {
     }
 }
 
-export default FindGyms;
+const mapStateToProps = (state: FGState) => ({
+    currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps, {})(FindGym);

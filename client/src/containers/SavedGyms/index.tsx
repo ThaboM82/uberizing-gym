@@ -6,6 +6,9 @@ import { CurrentUserState } from '../../reducers/auth';
 import Map from '../Map';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { mapToken } from '../../utils/config';
 
 interface SGProps {
   currentUser?: CurrentUserState;
@@ -34,6 +37,11 @@ class SavedGyms extends React.Component<SGProps, SGState> {
 
     render() {
         const { map } = this.state;
+        const currentUser = this.props?.currentUser?.currentUser;
+        if (!currentUser?.isLoggedIn) {
+            return <Redirect to='/' />;
+        }
+
         return (
             <Container fluid>
                 <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
@@ -76,4 +84,8 @@ class SavedGyms extends React.Component<SGProps, SGState> {
     }
 }
 
-export default SavedGyms;
+const mapStateToProps = (state: SGState) => ({
+    currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps, {})(SavedGyms);
