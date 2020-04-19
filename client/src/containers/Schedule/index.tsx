@@ -31,7 +31,7 @@ class Schedule extends React.Component<SProps, SState> {
     const date = this.state.date;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
-        return <Redirect to='/' />;
+      return <Redirect to="/" />;
     }
 
     return (

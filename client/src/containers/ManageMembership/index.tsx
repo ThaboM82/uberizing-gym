@@ -19,7 +19,7 @@ class ManageMembership extends React.Component<MMProps, MMState> {
   render() {
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
-        return <Redirect to='/' />;
+      return <Redirect to="/" />;
     }
 
     return (
@@ -34,7 +34,7 @@ class ManageMembership extends React.Component<MMProps, MMState> {
           </Col>
         </Row>
       </Container>
-    )
+    );
   }
 }
 

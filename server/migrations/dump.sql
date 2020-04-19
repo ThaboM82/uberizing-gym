@@ -17,7 +17,13 @@ CREATE TABLE `user` (
   `gender` ENUM('M', 'F', 'U') DEFAULT NULL,
   `profile_image` VARCHAR(150) DEFAULT NULL,
   `created_on` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `updated_on` DATETIME
+  `updated_on` DATETIME,
+  `street_address` VARCHAR(50) DEFAULT NULL,
+  `street_address2` VARCHAR(50) DEFAULT NULL,
+  `city` VARCHAR(20) DEFAULT NULL,
+  `state` VARCHAR(15) DEFAULT NULL,
+  `zip` VARCHAR(5) DEFAULT NULL,
+  `country` VARCHAR(15) DEFAULT NULL
 );
 
 INSERT INTO `user`
