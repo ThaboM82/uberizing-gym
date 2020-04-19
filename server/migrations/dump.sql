@@ -27,11 +27,11 @@ CREATE TABLE `user` (
 );
 
 INSERT INTO `user`
-(`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`)
+(`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`, `street_address`, `city`, `state`, `zip`, `country`)
 VALUES
-('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M'),
-('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M'),
-('Laurel', 'Fielding', 'lfielding', 'password', 'GYM_MEMBER', 'lfieldin@gmu.edu', '1990-12-12', '1234567890', 'F');
+('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA'),
+('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA'),
+('Laurel', 'Fielding', 'lfielding', 'password', 'GYM_MEMBER', 'lfieldin@gmu.edu', '1990-12-12', '1234567890', 'F', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA');
 
 DROP TABLE IF EXISTS `gym`;
 CREATE TABLE `gym` (
