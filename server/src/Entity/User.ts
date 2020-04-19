@@ -14,8 +14,8 @@ export class User {
   @Column()
   username: string;
 
-  @Column()
-  password: string;
+  @Column({ select: false })
+  password?: string;
 
   @Column({ name: 'user_type' })
   userType?: string;
@@ -46,4 +46,22 @@ export class User {
     type: 'datetime',
   })
   updatedOn?: string;
+
+  @Column({ name: 'street_address' })
+  streetAddress?: string;
+
+  @Column({ name: 'street_address2' })
+  streetAddress2?: string;
+
+  @Column()
+  city?: string;
+
+  @Column()
+  state?: string;
+
+  @Column()
+  zip?: string;
+
+  @Column()
+  country?: string;
 }

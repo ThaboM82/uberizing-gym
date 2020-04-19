@@ -1,0 +1,25 @@
+.content {
+  padding: 2rem;
+  padding-top: 3rem;
+  padding-left: 0;
+}
+
+.btn {
+  border-radius: 0;
+
+  &:hover {
+    background-color: $secondary;
+    border-color: $gray-300;
+    color: $gray-500;
+  }
+}
+
+.profile-view {
+  &__section {
+    border: none;
+
+    &--header {
+      border-bottom: 1px solid $primary;
+    }
+  }
+}

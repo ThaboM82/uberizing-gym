@@ -79,7 +79,11 @@ class SignIn extends React.Component<SIProps, SIState> {
               <div className="egym-section__icon">
                 <FontAwesomeIcon className="egym-section__icon--style" icon={faUserPlus} size="6x" />
               </div>
-              <Form className="egym-section__form" onSubmit={this.handleRegisterUserSubmit} noValidate>
+              <Form
+                className="egym-section__form egym-section__form--border"
+                onSubmit={this.handleRegisterUserSubmit}
+                noValidate
+              >
                 <FormGroup>
                   <InputGroup>
                     <Form.Control

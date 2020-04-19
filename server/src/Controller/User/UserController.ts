@@ -40,4 +40,9 @@ export class UserController {
   public viewUser(@Param('id') id: number): Promise<User> {
     return this.userQueryService.viewUser(id);
   }
+
+  @Post('/user/:id')
+  public updateUser(@Param('id') id: number, @Body() payload: Partial<User>): Promise<User> {
+    return this.userQueryService.updateUser(id, payload);
+  }
 }

@@ -3,19 +3,19 @@ import { User } from '../../models/User';
 import { Dispatch } from 'redux';
 import { authUrl } from '../../utils/config';
 
-export enum RegisterUserActionTypes {
-  REGISTER_USER_PENDING = 'REGISTER_USER_PENDING',
-  REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS',
-  REGISTER_USER_ERROR = 'REGISTER_USER_ERROR',
+export enum ActionType {
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR',
 }
 
 export const registerUser = (userPayload: User) => async (dispatch: Dispatch) => {
-  dispatch({ type: RegisterUserActionTypes.REGISTER_USER_PENDING });
+  dispatch({ type: ActionType.PENDING });
   try {
     const url = 'http://' + authUrl + ':3030/login';
     const user = await axios.post(url, userPayload);
     dispatch({
-      type: RegisterUserActionTypes.REGISTER_USER_SUCCESS,
+      type: ActionType.SUCCESS,
       payload: user?.data,
     });
   } catch (error) {
@@ -26,8 +26,40 @@ export const registerUser = (userPayload: User) => async (dispatch: Dispatch) =>
     //   err.forEach((e: any) => errorMessage += `<p>${Object.values(e.constraints)[0]}</p>`);
     // }
     dispatch({
-      type: RegisterUserActionTypes.REGISTER_USER_ERROR,
+      type: ActionType.ERROR,
       error: error?.response?.data?.message || 'User Registration Failed',
+    });
+  }
+};
+
+export const getUser = (id: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+  try {
+    const user = await axios.get(`http://localhost:3030/user/${id}`);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: user?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message || 'Cannot Get User Profile',
+    });
+  }
+};
+
+export const updateUser = (id: number, userPayload: User) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+  try {
+    const user = await axios.post(`http://localhost:3030/user/${id}`, userPayload);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: user?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message || 'Cannot Update User Profile',
     });
   }
 };
