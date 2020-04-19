@@ -19,7 +19,7 @@ class Dashboard extends React.Component<DProps, DState> {
   render() {
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
-      return <Redirect to='/' />;
+      return <Redirect to="/" />;
     }
 
     return (
@@ -29,8 +29,7 @@ class Dashboard extends React.Component<DProps, DState> {
           <Col lg={3} sm={12}>
             <SideBar />
           </Col>
-          <Col lg={9} sm={12} className="content">
-          </Col>
+          <Col lg={9} sm={12} className="content"></Col>
         </Row>
       </Container>
     );

@@ -3,6 +3,7 @@ import * as jwt from 'jsonwebtoken';
 import { SignOptions } from 'jsonwebtoken';
 
 export interface TokenPayload {
+  id: number;
   firstName: string;
   lastName: string;
   username: string;

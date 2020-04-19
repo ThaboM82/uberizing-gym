@@ -26,10 +26,18 @@
     }
 
     &__form {
-        border: 1px solid $gray-400;
         margin-top: 3rem;
         padding: 5rem 3rem;
         border-radius: 0;
+
+        &--border {
+            border: 1px solid $gray-400;
+        }
+
+        &--label {
+            font-size: $font-size-base * .9;
+            font-weight: 600;
+        }
 
         &--input {
             height: calc(2em + 1rem + 2px);
@@ -37,6 +45,10 @@
             border: none;
             border-bottom: 1px solid $primary;
             border-radius: 0;
+        }
+
+        &--date-picker {
+            margin-top: .7rem;
         }
 
         &--icon {

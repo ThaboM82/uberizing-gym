@@ -11,4 +11,10 @@ export interface User {
   gender?: string;
   profileImage?: string;
   updatedOn?: string;
+  streetAddress?: string;
+  streetAddress2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
 }
