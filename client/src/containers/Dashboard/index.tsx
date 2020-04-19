@@ -26,7 +26,7 @@ class Dashboard extends React.Component<DProps, DState> {
       <Container fluid>
         <Header history={this.props.history} currentUser={this.props?.currentUser?.currentUser} />
         <Row className="profile">
-          <Col lg={3} sm={12}>
+          <Col>
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content"></Col>

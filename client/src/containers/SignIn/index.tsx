@@ -58,9 +58,6 @@ class SignIn extends React.Component<SIProps, SIState> {
           <Col>
             <div className="egym-heading">
               <img src={logo} alt="E Gym" />
-              <h1 className="egym-heading__text" style={{ marginTop: 30 }}>
-                Members Login Portal
-              </h1>
             </div>
           </Col>
         </Row>
@@ -118,7 +115,7 @@ class SignIn extends React.Component<SIProps, SIState> {
               </Form>
               <div className="egym-section--short-menu">
                 <p>
-                  New here: <Link to="/sign-up">Register</Link>
+                  <Link to="/sign-up">Register</Link>
                 </p>
                 <p>
                   <Link to="/sign-up">Forgot Password</Link>
