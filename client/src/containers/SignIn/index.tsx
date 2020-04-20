@@ -57,7 +57,7 @@ class SignIn extends React.Component<SIProps, SIState> {
         <Row>
           <Col>
             <div className="egym-heading">
-              <img src={logo} alt="E Gym" />
+              <img src={logo} className='egym-logo' alt="E Gym" />
               <h1 className="egym-heading__text" style={{ marginTop: 30 }}>
                 Members Login Portal
               </h1>

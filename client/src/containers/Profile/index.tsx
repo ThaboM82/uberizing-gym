@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, FormControl, Button, Row } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
 import Header from '../../components/Header';

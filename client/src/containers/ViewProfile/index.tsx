@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Col, Button, Row, Card, Table } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
-import { User } from '../../models/User';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
 import { Redirect, NavLink } from 'react-router-dom';

@@ -3,6 +3,10 @@
     text-align: center;
 }
 
+.egym-logo {
+    width: 7rem;
+}
+
 .egym-section {
     position: relative;
     padding: 1rem;
@@ -65,6 +69,11 @@
             font-size: $font-size-base;
             padding: .6rem 1.5rem;
             border-radius: 0;
+        }
+
+        &--action-icon {
+            margin-top: 1.5rem;
+            padding: .8rem;
         }
     }
 

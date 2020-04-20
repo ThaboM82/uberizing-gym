@@ -23,3 +23,16 @@
     }
   }
 }
+
+.egym-section {
+  &__view-toggle {
+    &--icon {
+      color: $white;
+      margin-left: .1rem;
+    }
+  }
+}
+
+.mapboxgl-popup-close-button {
+  z-index: 100;
+}
