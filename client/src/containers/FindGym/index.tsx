@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import GymListView from '../GymListView';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -95,9 +96,9 @@ class FindGym extends React.Component<FGProps, FGState> {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col lg={10}>
                 {map && <Map onPinClick={this.onPinClick} />}
-                {!map && <div>list</div>}
+                {!map && <GymListView />}
               </Col>
             </Row>
           </Col>

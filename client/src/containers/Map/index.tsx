@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { GymsState } from '../../reducers/gym';
 import { getAllGyms } from '../../actions';
 import { Gym } from '../../models/Gym';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Spinner, Col } from 'react-bootstrap';
+import { faAlignCenter } from '@fortawesome/free-solid-svg-icons';
 
 interface MProps {
   currentUser?: CurrentUserState;
@@ -57,7 +58,7 @@ interface PProps {
 }
 
 export const Pins: React.FC<PProps> = (props: PProps) => {
-  return props.data.map((gym, index) => (
+  return props?.data?.map((gym, index) => (
     <Marker key={`marker-${index}`} longitude={parseFloat(gym.longitude)} latitude={parseFloat(gym.latitude)}>
       <svg
         height={SIZE}
@@ -151,6 +152,13 @@ class Map extends React.Component<MProps, MState> {
 
   render() {
     const gyms = this.props?.gyms?.gyms;
+    const pending = this.props?.gyms?.pending;
+    if (pending) {
+      return <Col lg={10} style={{ textAlign: 'center', marginTop: 30 }}>
+        <Spinner animation='border' />
+      </Col>;
+    }
+
     return (
       <ReactMapGL
         {...this.state.viewport}
@@ -169,7 +177,7 @@ class Map extends React.Component<MProps, MState> {
           <ScaleControl />
         </div>
       </ReactMapGL>
-    );
+    )
   }
 }
 
