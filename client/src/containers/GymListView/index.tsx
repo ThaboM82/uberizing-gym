@@ -42,7 +42,7 @@ class GymListView extends React.Component<GProps, GState> {
               <Card.Title style={{ fontWeight: 700 }}>{gym.name}</Card.Title>
               <Card.Text>{gym.address}</Card.Text>
               <Card.Text>{gym.city} {gym.state} {gym.zipCode}</Card.Text>
-              <Button variant='primary'>Save Gym</Button>
+              <Button variant='primary'>{(gym.isSavedGym === '1') ? 'Unsave Gym' : 'Save Gym'}</Button>
             </Card.Body>
           </Card>
         })}

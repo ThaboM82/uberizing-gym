@@ -7,5 +7,5 @@ export interface Gym {
   zipCode: string;
   latitude: string;
   longitude: string;
-  isSavedGym?: boolean;
+  isSavedGym?: string;
 }

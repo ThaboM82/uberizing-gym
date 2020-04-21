@@ -89,7 +89,7 @@ export const GymInfo: React.FC<Gym> = (props: Gym) => {
         <Card.Title>{props.name}</Card.Title>
         {props.address}, {props.city} {props.state} {props.zipCode}
       </Card.Body>
-      <Button variant='primary'>{props.isSavedGym ? 'Unsave Gym' : 'Save Gym'}</Button>
+      <Button variant='primary'>{(props.isSavedGym === '1') ? 'Unsave Gym' : 'Save Gym'}</Button>
     </Card>
   );
 }

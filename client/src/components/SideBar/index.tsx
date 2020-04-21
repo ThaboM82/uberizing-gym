@@ -3,7 +3,6 @@ import { Nav, Card, Image, Button, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendarAlt,
-  faDumbbell,
   faHome,
   faIdCard,
   faRunning,
@@ -77,17 +76,6 @@ class SideBar extends React.Component<SBProps, SBState> {
             <Row>
               <Col md={1}><FontAwesomeIcon icon={faSearch} /></Col>
               <Col><span style={{ marginLeft: 10 }}>Find Gym</span></Col>
-            </Row>
-          </Nav.Link>
-          <Nav.Link
-            as={NavLink}
-            to="/saved-gyms"
-            className="flex-column egym-sidebar-menu__item"
-            activeClassName="flex-column egym-sidebar-menu__active"
-          >
-            <Row>
-              <Col md={1}><FontAwesomeIcon icon={faDumbbell} /></Col>
-              <Col><span style={{ marginLeft: 10 }}>Saved Gyms</span></Col>
             </Row>
           </Nav.Link>
           <Nav.Link

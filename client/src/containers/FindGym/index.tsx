@@ -98,7 +98,7 @@ class FindGym extends React.Component<FGProps, FGState> {
             <Row>
               <Col lg={10}>
                 {map && <Map currentUserId={currentUser?.id} onPinClick={this.onPinClick} />}
-                {!map && <GymListView />}
+                {!map && <GymListView currentUserId={currentUser?.id} />}
               </Col>
             </Row>
           </Col>
