@@ -8,11 +8,11 @@ export enum ActionType {
   ERROR = 'ERROR'
 }
 
-export const getAllGyms = () => async (dispatch: Dispatch) => {
+export const getAllGyms = (id?: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
 
   try {
-    const gyms = await Axios.get(`http://${authUrl}:3030/all-gyms`);
+    const gyms = await Axios.get(`http://${authUrl}:3030/all-gyms/${id}`);
     dispatch({
       type: ActionType.SUCCESS,
       payload: gyms?.data,

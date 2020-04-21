@@ -1,4 +1,4 @@
-import { JsonController, Get } from "routing-controllers";
+import { JsonController, Get, Param } from "routing-controllers";
 import { IGymRepository } from "../../Interface/IGymRepository";
 import Container from "typedi";
 import { GymRepository } from "../../Repository";
@@ -12,8 +12,8 @@ export class GymController {
     this.gymRepository = Container.get(GymRepository);
   }
 
-  @Get('/all-gyms')
-  async getAllGyms(): Promise<Gym[]> {
-    return this.gymRepository.getAllGyms();
+  @Get('/all-gyms/:id')
+  async getAllGyms(@Param('id') id?: number): Promise<Gym[]> {
+    return this.gymRepository.getAllGyms(id);
   }
 }

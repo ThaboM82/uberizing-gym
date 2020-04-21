@@ -1,5 +1,5 @@
 import { Gym } from "../Entity";
 
 export interface IGymRepository {
-  getAllGyms: () => Promise<Gym[]>;
+  getAllGyms: (id?: number) => Promise<Gym[]>;
 }

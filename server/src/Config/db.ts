@@ -1,4 +1,4 @@
-import { ConnectionOptions, getConnectionManager, Connection, createConnection, ObjectType, Repository } from 'typeorm';
+import { ConnectionOptions, getConnectionManager, Connection, createConnection, ObjectType, Repository, EntityManager } from 'typeorm';
 import * as appModules from '../Entity';
 import * as env from 'dotenv';
 
@@ -39,3 +39,8 @@ export const getRepository = async <T>(repo: ObjectType<T>): Promise<Repository<
   const dbConnection = await getDBConnection();
   return dbConnection.getRepository(repo);
 };
+
+export const getDBManager = async(): Promise<EntityManager> => {
+  const dbConnection = await getDBConnection();
+  return dbConnection.manager;
+}

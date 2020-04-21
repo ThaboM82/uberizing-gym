@@ -3,12 +3,13 @@ import { CurrentUserState } from '../../reducers/auth';
 import { connect } from 'react-redux';
 import { GymsState } from '../../reducers/gym';
 import { getAllGyms } from '../../actions';
-import { Spinner, Col, CardGroup, Card, Button, Row, CardColumns } from 'react-bootstrap';
+import { Spinner, Col, Card, Button, CardColumns } from 'react-bootstrap';
 
 interface GProps {
   currentUser?: CurrentUserState;
   gyms: GymsState;
   getAllGyms: Function;
+  currentUserId?: number;
 }
 
 interface GState {
@@ -21,7 +22,7 @@ class GymListView extends React.Component<GProps, GState> {
   };
 
   componentDidMount() {
-    this.props.getAllGyms();
+    this.props.getAllGyms(this.props?.currentUserId);
   }
 
   render() {

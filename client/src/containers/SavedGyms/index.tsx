@@ -1,29 +1,31 @@
 import React from 'react';
-import { Container, Col, Nav, Form, Row } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faSearch, faMap } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserState } from '../../reducers/auth';
 import Map from '../Map';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { mapToken } from '../../utils/config';
+import { Redirect } from 'react-router-dom';
+import GymListView from '../GymListView';
 
-interface SGProps {
+interface FGProps {
   currentUser?: CurrentUserState;
   history: any;
 }
 
-interface SGState {
+interface FGState {
   currentUser?: CurrentUserState;
   map: boolean;
 }
 
-class SavedGyms extends React.Component<SGProps, SGState> {
+class SavedGyms extends React.Component<FGProps, FGState> {
   state = {
     map: true,
   };
+
+  handleInputChange = (event: any) => {};
 
   toggleView = (map: boolean) => {
     if (this.state.map !== map) {
@@ -31,10 +33,12 @@ class SavedGyms extends React.Component<SGProps, SGState> {
     }
   };
 
+  onSearch = (event: any) => {};
+
   onPinClick = (gym: any) => {};
 
   render() {
-    const { map } = this.state;
+    const map = this.state.map;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
       return <Redirect to="/" />;
@@ -48,29 +52,55 @@ class SavedGyms extends React.Component<SGProps, SGState> {
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content">
-            <Form.Row>
-              <Col></Col>
-              <Col md={1} className="maplist-buttons">
-                <Form.Row>
-                  <Col>
-                    <Nav.Item onClick={() => this.toggleView(true)}>
-                      <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
-                    </Nav.Item>
-                  </Col>
-                  <Col>
-                    <Nav.Item onClick={() => this.toggleView(false)}>
-                      <FontAwesomeIcon className="icon" icon={faThList} />
-                    </Nav.Item>
-                  </Col>
-                </Form.Row>
+            <Form noValidate>
+              <Form.Row>
+                <FormGroup as={Col} lg={4}>
+                  <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="egym-section__form--input"
+                    placeholder="Enter gym name, e.g. Gold Gym"
+                    name="firstName"
+                    size="lg"
+                    onChange={() => {}}
+                    autoFocus={true}
+                  />
+                </FormGroup>
+                <FormGroup as={Col} lg={4}>
+                  <Form.Label className="egym-section__form--label">Location</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="egym-section__form--input"
+                    placeholder="Enter gym location e.g. city, state, zip"
+                    name="firstName"
+                    size="lg"
+                    onChange={() => {}}
+                  />
+                </FormGroup>
+                <FormGroup as={Col} lg={2} style={{ textAlign: 'left' }}>
+                  <Button type="submit" variant="primary" className='egym-section__form--action-icon' block>
+                    <FontAwesomeIcon icon={faSearch} style={{ marginRight: 20 }} />
+                    Search
+                  </Button>
+                </FormGroup>
+              </Form.Row>
+            </Form>
+            <Row>
+              <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>
+                <Button variant={map ? 'primary' : 'secondary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(true)}>
+                  <FontAwesomeIcon icon={faMap} />
+                </Button>
+                <Button variant={map ? 'secondary' : 'primary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(false)}>
+                  <FontAwesomeIcon icon={faThList} />
+                </Button>
               </Col>
-            </Form.Row>
-            <Form.Row>
-              <Col>
+            </Row>
+            <Row>
+              <Col lg={10}>
                 {map && <Map onPinClick={this.onPinClick} />}
-                {!map && <div>list</div>}
+                {!map && <GymListView />}
               </Col>
-            </Form.Row>
+            </Row>
           </Col>
         </Row>
       </Container>
@@ -78,7 +108,7 @@ class SavedGyms extends React.Component<SGProps, SGState> {
   }
 }
 
-const mapStateToProps = (state: SGState) => ({
+const mapStateToProps = (state: FGState) => ({
   currentUser: state.currentUser,
 });
 

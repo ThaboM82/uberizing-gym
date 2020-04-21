@@ -15,6 +15,7 @@ interface MProps {
   gyms: GymsState;
   getAllGyms: Function;
   onPinClick: Function;
+  currentUserId?: number;
 }
 
 interface MState {
@@ -65,7 +66,7 @@ export const Pins: React.FC<PProps> = (props: PProps) => {
         viewBox="0 0 24 24"
         style={{
           cursor: 'pointer',
-          fill: '#d00',
+          fill: (gym.isSavedGym === '1') ? 'green' : '#d00',
           stroke: 'none',
           transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
         }}
@@ -88,7 +89,7 @@ export const GymInfo: React.FC<Gym> = (props: Gym) => {
         <Card.Title>{props.name}</Card.Title>
         {props.address}, {props.city} {props.state} {props.zipCode}
       </Card.Body>
-      <Button variant='primary'>Save Gym</Button>
+      <Button variant='primary'>{props.isSavedGym ? 'Unsave Gym' : 'Save Gym'}</Button>
     </Card>
   );
 }
@@ -118,7 +119,7 @@ class Map extends React.Component<MProps, MState> {
   };
 
   componentDidMount() {
-    this.props.getAllGyms();
+    this.props.getAllGyms(this.props?.currentUserId);
     const viewport = this.state.viewport;
     this.setState({ viewport });
   }
