@@ -3,6 +3,7 @@ import { UserRepository } from '../../Repository';
 import { Post, Body, Get, Param, JsonController, NotAcceptableError } from 'routing-controllers';
 import { User } from '../../Entity/User';
 import { IUserRepository } from '../../Interface/IUserRepository';
+import { GymEvent } from '../../Entity';
 // import { validate } from 'class-validator';
 
 @JsonController()
@@ -44,5 +45,10 @@ export class UserController {
   @Post('/user/:id')
   public updateUser(@Param('id') id: number, @Body() payload: Partial<User>): Promise<User> {
     return this.userQueryService.updateUser(id, payload);
+  }
+
+  @Get('/user/:id/events')
+  public getUserEvents(@Param('id') id: number): Promise<GymEvent[]> {
+    return this.userQueryService.getUserEvents(id);
   }
 }
