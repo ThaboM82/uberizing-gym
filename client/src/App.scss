@@ -1,7 +1,6 @@
 .content {
   padding: 2rem;
   padding-top: 3rem;
-  padding-left: 0;
 }
 
 .btn {
@@ -22,4 +21,17 @@
       border-bottom: 1px solid $primary;
     }
   }
+}
+
+.egym-section {
+  &__view-toggle {
+    &--icon {
+      color: $white;
+      margin-left: .1rem;
+    }
+  }
+}
+
+.mapboxgl-popup-close-button {
+  z-index: 100;
 }

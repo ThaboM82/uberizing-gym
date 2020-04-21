@@ -10,7 +10,7 @@ export class Gym {
 
   @Column()
   address: string;
-  
+
   @Column()
   city: string;
 
@@ -25,4 +25,7 @@ export class Gym {
 
   @Column({ type: 'decimal', precision: 11, scale: 8 })
   longitude: number;
+
+  @Column({ select: false })
+  isSavedGym?: number;
 }

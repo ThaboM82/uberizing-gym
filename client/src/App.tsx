@@ -8,7 +8,6 @@ import SignIn from './containers/SignIn';
 import SignUp from './containers/SignUp';
 import Dashboard from './containers/Dashboard';
 import FindGyms from './containers/FindGym';
-import SavedGyms from './containers/SavedGyms';
 import Schedule from './containers/Schedule';
 import ManageMembership from './containers/ManageMembership';
 import Profile from './containers/Profile';
@@ -24,7 +23,6 @@ class App extends React.Component<{}, {}> {
             <Route path="/sign-up" exact component={SignUp} />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/find-gym" exact component={FindGyms} />
-            <Route path="/saved-gyms" exact component={SavedGyms} />
             <Route path="/my-schedule" exact component={Schedule} />
             <Route path="/my-activities" exact component={Dashboard} />
             <Route path="/manage-membership" exact component={ManageMembership} />

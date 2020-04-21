@@ -1,13 +1,14 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, InputGroup, Button, Nav, Row } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faThList } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faSearch, faMap } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserState } from '../../reducers/auth';
 import Map from '../Map';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import GymListView from '../GymListView';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -51,65 +52,55 @@ class FindGym extends React.Component<FGProps, FGState> {
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content">
-            <Form.Row>
-              <Col>
-                <FormGroup>
-                  <InputGroup>
-                    <Form.Control
-                      type="text"
-                      placeholder="Keyword e.g. gym name"
-                      name="keywords"
-                      onChange={this.handleInputChange}
-                    />
-                  </InputGroup>
+            <Form noValidate>
+              <Form.Row>
+                <FormGroup as={Col} lg={4}>
+                  <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="egym-section__form--input"
+                    placeholder="Enter gym name, e.g. Gold Gym"
+                    name="firstName"
+                    size="lg"
+                    onChange={() => {}}
+                    autoFocus={true}
+                  />
                 </FormGroup>
-              </Col>
-              <Col>
-                <FormGroup>
-                  <InputGroup>
-                    <Form.Control
-                      type="text"
-                      placeholder="Location"
-                      name="location"
-                      onChange={this.handleInputChange}
-                    />
-                  </InputGroup>
+                <FormGroup as={Col} lg={4}>
+                  <Form.Label className="egym-section__form--label">Location</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="egym-section__form--input"
+                    placeholder="Enter gym location e.g. city, state, zip"
+                    name="firstName"
+                    size="lg"
+                    onChange={() => {}}
+                  />
                 </FormGroup>
-              </Col>
-              <Col md={2}>
-                <Button className="submit-button" onClick={this.onSearch}>
-                  Search
+                <FormGroup as={Col} lg={2} style={{ textAlign: 'left' }}>
+                  <Button type="submit" variant="primary" className='egym-section__form--action-icon' block>
+                    <FontAwesomeIcon icon={faSearch} style={{ marginRight: 20 }} />
+                    Search
+                  </Button>
+                </FormGroup>
+              </Form.Row>
+            </Form>
+            <Row>
+              <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>
+                <Button variant={map ? 'primary' : 'secondary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(true)}>
+                  <FontAwesomeIcon icon={faMap} />
+                </Button>
+                <Button variant={map ? 'secondary' : 'primary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(false)}>
+                  <FontAwesomeIcon icon={faThList} />
                 </Button>
               </Col>
-            </Form.Row>
-            <Form.Row>
-              <Col>
-                <b>Distance</b>
-                <FormGroup>
-                  <InputGroup></InputGroup>
-                </FormGroup>
+            </Row>
+            <Row>
+              <Col lg={10}>
+                {map && <Map currentUserId={currentUser?.id} onPinClick={this.onPinClick} />}
+                {!map && <GymListView currentUserId={currentUser?.id} />}
               </Col>
-              <Col md={1} className="maplist-buttons">
-                <Form.Row>
-                  <Col>
-                    <Nav.Item onClick={() => this.toggleView(true)}>
-                      <FontAwesomeIcon className="icon" icon={faMapMarkerAlt} />
-                    </Nav.Item>
-                  </Col>
-                  <Col>
-                    <Nav.Item onClick={() => this.toggleView(false)}>
-                      <FontAwesomeIcon className="icon" icon={faThList} />
-                    </Nav.Item>
-                  </Col>
-                </Form.Row>
-              </Col>
-            </Form.Row>
-            <Form.Row>
-              <Col>
-                {map && <Map onPinClick={this.onPinClick} />}
-                {!map && <div>list</div>}
-              </Col>
-            </Form.Row>
+            </Row>
           </Col>
         </Row>
       </Container>
