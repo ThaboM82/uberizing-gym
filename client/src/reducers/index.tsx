@@ -8,7 +8,7 @@ const rootReducer = combineReducers({
   currentUser: userLoginReducer,
   user: getUserReducer,
   gyms: getAllGymsReducer,
-  events: getUserEventsReducer
+  userEvents: getUserEventsReducer
 });
 
 export default rootReducer;

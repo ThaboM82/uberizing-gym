@@ -17,18 +17,18 @@ import "@fullcalendar/list/main.css";
 interface CProps {
   getUserEvents: Function;
   currentUserId?: number;
-  userEvents: EventsState[];
+  userEvents?: EventsState;
 }
 
 interface CState {
   date: Date;
-  userEvents: EventsState[];
+  userEvents?: EventsState;
 }
 
 class Calendar extends React.Component<CProps, CState> {
   state = {
     date: new Date(),
-    userEvents: []
+    userEvents: {} as EventsState,
   };
 
   componentDidMount() {
@@ -44,7 +44,7 @@ class Calendar extends React.Component<CProps, CState> {
   };
 
   render() {
-    console.log(this.state.userEvents);
+    const userEvents = this.props?.userEvents?.events;
     return (
       <Container fluid>
         <FullCalendar
@@ -58,10 +58,7 @@ class Calendar extends React.Component<CProps, CState> {
          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
          dateClick={this.handleDateClick}
          eventClick={this.handleEventClick}
-         events={[
-            { title: 'event 1', start: '2020-04-21T20:00:00', end: '2020-04-22T02:00:00', description:'faeiofjeiaofjiaef' },
-            { title: 'event 2', date: '2020-04-02' }
-          ]}
+         events={userEvents}
         />
       </Container>
     );
@@ -69,7 +66,7 @@ class Calendar extends React.Component<CProps, CState> {
 }
 
 const mapStateToProps = (state: CState) => ({
-    userEvents: state.userEvents,
+  userEvents: state.userEvents,
 });
 
 export default connect(mapStateToProps, { getUserEvents })(Calendar);
