@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { EventsState } from '../../reducers/user';
+import { getUserEvents } from '../../actions';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import { getUserEvents } from '../../actions/user';
 
 import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
@@ -16,12 +17,12 @@ import "@fullcalendar/list/main.css";
 interface CProps {
   getUserEvents: Function;
   currentUserId?: number;
-  userEvents: any;
+  userEvents: EventsState[];
 }
 
 interface CState {
   date: Date;
-  userEvents: any;
+  userEvents: EventsState[];
 }
 
 class Calendar extends React.Component<CProps, CState> {
