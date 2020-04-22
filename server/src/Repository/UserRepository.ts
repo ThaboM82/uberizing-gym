@@ -52,14 +52,20 @@ export class UserRepository {
     return await (await getDBManager())
       .query(`
         SELECT
-        ge.id,
-        ge.gym_id,
+          ge.id,
           ge.start,
           ge.end,
-          ge.title,
-          ge.description
+          ge.title as eventTitle,
+          ge.description,
+          g.name as gym,
+          g.address,
+          g.city,
+          g.state,
+          g.zip_code,
+          CONCAT(g.name, ': ', ge.title) as title
         FROM user_event ue
         INNER JOIN gym_event ge ON ge.id = ue.event_id
+        INNER JOIN gym g ON g.id = ge.gym_id
         WHERE ue.user_id = ${id};
       `)
     ;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { UserEvent } from '../../models/UserEvent';
 import { EventsState } from '../../reducers/user';
 import { getUserEvents } from '../../actions';
 import FullCalendar from '@fullcalendar/react';
@@ -13,38 +14,44 @@ import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 import "@fullcalendar/list/main.css";
+import "./Calendar.scss";
 
 interface CProps {
   getUserEvents: Function;
   currentUserId?: number;
-  userEvents?: EventsState;
+  userEvents: EventsState;
 }
 
 interface CState {
   date: Date;
-  userEvents?: EventsState;
+  userEvents: EventsState;
+  eventInfo: UserEvent;
+  events: Object;
 }
 
 class Calendar extends React.Component<CProps, CState> {
   state = {
     date: new Date(),
     userEvents: {} as EventsState,
+    eventInfo: {} as UserEvent,
+    events: {}
   };
 
   componentDidMount() {
     this.props.getUserEvents(this.props?.currentUserId);
+    let events = {};
+    this.props.userEvents.events.map((event) => {
+        events[event.id] = event;
+    });
+    this.setState({ events });
   }
 
-  handleDateClick = (arg: any) => {
-    console.log(arg.dateStr);
-  };
-
-  handleEventClick = (info: any) => {
-    console.log(info);
-  };
+  handleEventRender = (info: any) => {
+  }
 
   render() {
-    const userEvents = this.props?.userEvents?.events;
+    const userEvents = this.props.userEvents.events;
+
     return (
       <Container fluid>
         <FullCalendar
@@ -56,8 +63,7 @@ class Calendar extends React.Component<CProps, CState> {
           right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
          }}
          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]}
-         dateClick={this.handleDateClick}
-         eventClick={this.handleEventClick}
+         eventRender={this.handleEventRender}
          events={userEvents}
         />
       </Container>
