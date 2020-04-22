@@ -53,7 +53,7 @@ class FindGym extends React.Component<FGProps, FGState> {
           </Col>
           <Col lg={9} sm={12} className="content">
             <Form noValidate>
-              <Form.Row>
+              <Row>
                 <FormGroup as={Col} lg={4}>
                   <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
                   <Form.Control
@@ -83,7 +83,7 @@ class FindGym extends React.Component<FGProps, FGState> {
                     Search
                   </Button>
                 </FormGroup>
-              </Form.Row>
+              </Row>
             </Form>
             <Row>
               <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>

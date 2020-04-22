@@ -44,9 +44,11 @@ class SideBar extends React.Component<SBProps, SBState> {
                 ? `${currentUser?.firstName} ${currentUser?.lastName}`
                 : `${currentUser?.username}`}
             </Card.Title>
-            <NavLink to="/view-profile" className="egym-sidebar-profile__view-profile">
-              View Profile
-            </NavLink>
+            <NavLink to="/view-profile">
+              <Button className="egym-sidebar-profile__logout" variant="primary">
+                View Profile
+              </Button>
+            </NavLink>{'  '}
             <Button className="egym-sidebar-profile__logout" variant="primary" onClick={logout}>
               Logout
             </Button>
