@@ -1,0 +1,41 @@
+$body-bg: #ffffff;
+$primary: #FFA500;
+$secondary: #FFDAB9;
+$tertiary: #F5F5F5;
+$quaternary: #d9ceb2;
+$header: rgb(206, 212, 218);
+
+.fc-button {
+  text-transform: capitalize;
+  background-color: $primary;
+  border-color: black;
+  cursor: pointer;
+}
+
+.fc-content,
+.fc-day-grid-event,
+.fc-time-grid-event,
+.fc-event-dot {
+  background-color: #77B3E0;
+  border-color: black;
+  
+  .fc-time, .fc-title {
+    color: black;
+  }
+}
+
+.fc-button-primary:hover {
+  background-color: $secondary;
+}
+
+.fc-button-primary:disabled {
+  background-color: $header;
+  color: black;
+}
+
+.fc-button-primary:not(:disabled):active,
+.fc-button-primary:not(:disabled).fc-button-active {
+  color: black;
+  background-color: $header;
+  border-color: black;
+}

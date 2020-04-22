@@ -35,7 +35,8 @@ export const registerUser = (userPayload: User) => async (dispatch: Dispatch) =>
 export const getUser = (id: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const user = await axios.get(`http://localhost:3030/user/${id}`);
+    const url = `http://` + authUrl + `:3030/user/${id}`;
+    const user = await axios.get(url);
     dispatch({
       type: ActionType.SUCCESS,
       payload: user?.data,
@@ -51,7 +52,8 @@ export const getUser = (id: number) => async (dispatch: Dispatch) => {
 export const updateUser = (id: number, userPayload: User) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const user = await axios.post(`http://localhost:3030/user/${id}`, userPayload);
+    const url = `http://` + authUrl + `:3030/user/${id}`;
+    const user = await axios.post(url, userPayload);
     dispatch({
       type: ActionType.SUCCESS,
       payload: user?.data,
@@ -60,6 +62,23 @@ export const updateUser = (id: number, userPayload: User) => async (dispatch: Di
     dispatch({
       type: ActionType.ERROR,
       error: error?.response?.data?.message || 'Cannot Update User Profile',
+    });
+  }
+};
+
+export const getUserEvents = (id: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+  try {
+    const url = `http://` + authUrl + `:3030/user/${id}/events`;
+    const events = await axios.get(url);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: events?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message || 'Cannot Get User Profile',
     });
   }
 };

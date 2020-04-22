@@ -1,8 +1,9 @@
 import { Service } from 'typedi';
 import { Repository, ObjectType } from 'typeorm';
 import { getRepository } from '../Config';
-import { User } from '../Entity';
+import { User, GymEvent } from '../Entity';
 import { NotFoundError } from 'routing-controllers';
+import { getDBManager } from "../Config";
 
 @Service()
 export class UserRepository {
@@ -45,5 +46,28 @@ export class UserRepository {
     existingUser.country = payload.country;
 
     return await (await getRepository(User)).save(existingUser);
+  }
+
+  public async getUserEvents(id?: number): Promise<GymEvent[]> {
+    return await (await getDBManager())
+      .query(`
+        SELECT
+          ge.id,
+          ge.start,
+          ge.end,
+          ge.title as eventTitle,
+          ge.description,
+          g.name as gym,
+          g.address,
+          g.city,
+          g.state,
+          g.zip_code,
+          CONCAT(g.name, ': ', ge.title) as title
+        FROM user_event ue
+        INNER JOIN gym_event ge ON ge.id = ue.event_id
+        INNER JOIN gym g ON g.id = ge.gym_id
+        WHERE ue.user_id = ${id};
+      `)
+    ;
   }
 }
