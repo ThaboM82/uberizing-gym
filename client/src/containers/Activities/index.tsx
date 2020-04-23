@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFire,
@@ -41,6 +41,7 @@ class Activities extends React.Component<AProps, AState> {
           </Col>
           <Col lg={9} sm={12} className="content">
             <div className="activities">
+            <Row md={5}><Button variant="primary" className='egym-section__form--action-icon' block>Sync Fitness Tracker</Button></Row>
             <Col>
                 <Row className="table__header"><Col><Form.Label className="egym-section__form--label">TREADMILL PERFORMANCE</Form.Label></Col></Row>
                 <Row>
