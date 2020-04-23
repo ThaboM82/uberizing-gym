@@ -23,17 +23,6 @@ export class UserController {
       `);
     }
 
-    // const errors = await validate(payload);
-    // console.log(errors);
-    // let errorMessage = '';
-    // if (errors.length > 0) {
-    //   for (const error of errors) {
-    //     errorMessage += `<p>Validation Error: ${error}</p>`;
-    //   }
-    //   console.log(123);
-    //   throw new NotAcceptableError(errorMessage);
-    // }
-
     return this.userQueryService.registerUser(payload);
   }
 

@@ -19,12 +19,6 @@ export const registerUser = (userPayload: User) => async (dispatch: Dispatch) =>
       payload: user?.data,
     });
   } catch (error) {
-    // let errorMessage = '';
-    // console.log(error?.response);
-    // const err = error?.response?.data?.errors;
-    // if (err) {
-    //   err.forEach((e: any) => errorMessage += `<p>${Object.values(e.constraints)[0]}</p>`);
-    // }
     dispatch({
       type: ActionType.ERROR,
       error: error?.response?.data?.message || 'User Registration Failed',
