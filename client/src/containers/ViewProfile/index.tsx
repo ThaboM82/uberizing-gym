@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
 import { Redirect, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser } from '../../actions/user';
+import { getUser } from '../../actions';
 import { UserState } from '../../reducers/user';
 import moment from 'moment';
 
@@ -58,7 +58,7 @@ class ViewProfile extends React.Component<VPProps, VPState> {
                       <tbody>
                         <tr>
                           <td>
-                            <strong>First Name</strong>
+                            <strong>Full Name</strong>
                           </td>
                           <td>
                             {user?.firstName} {user?.lastName}

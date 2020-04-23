@@ -15,6 +15,12 @@ export interface UserState {
   error: string;
 }
 
+export interface UpdateUserState {
+  pending: boolean;
+  user: User;
+  error: string;
+}
+
 export interface EventsState {
   pending: boolean;
   events: UserEvent[];
@@ -48,6 +54,30 @@ export const registerUserReducer = (state: any = null, action: AnyAction) => {
 };
 
 export const getUserReducer = (state: any = null, action: AnyAction) => {
+  switch (action.type) {
+    case ActionType.PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case ActionType.SUCCESS:
+      return {
+        ...state,
+        user: action.payload,
+        error: null,
+      };
+    case ActionType.ERROR:
+      return {
+        ...state,
+        user: null,
+        error: action.error,
+      };
+    default:
+      return state;
+  }
+};
+
+export const updateUserReducer = (state: any = null, action: AnyAction) => {
   switch (action.type) {
     case ActionType.PENDING:
       return {

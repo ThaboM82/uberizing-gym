@@ -43,7 +43,17 @@ export class UserController {
   }
 
   @Post('/user/:id')
-  public updateUser(@Param('id') id: number, @Body() payload: Partial<User>): Promise<User> {
+  public updateUser(@Param('id') id: number, @Body() payload: Partial<User>): Promise<any> {
+    // if (!payload.email.match(/^[A-Za-z]+[._-]?[A-Za-z0-9]*[@][A-Za-z0-9]{2,}\.[a-z]{2,6}$/g)) {
+    //   throw new NotAcceptableError(
+    //     'Please provide a valid email address.'
+    //   );
+    // }
+
+    // if (!payload.firstName) {
+    //   throw new NotAcceptableError('First name cannot be blank.');
+    // }
+
     return this.userQueryService.updateUser(id, payload);
   }
 

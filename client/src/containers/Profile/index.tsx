@@ -1,32 +1,42 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row, Alert } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import { User } from '../../models/User';
 import Header from '../../components/Header';
 import SideBar from '../../components/SideBar';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser, updateUser } from '../../actions/user';
-import { UserState } from '../../reducers/user';
+import { getUser, updateUser } from '../../actions';
+import { UserState, UpdateUserState } from '../../reducers/user';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment';
 
 interface PProps {
   currentUser?: CurrentUserState;
-  user: UserState;
+  user?: UserState;
   getUser: Function;
   updateUser: Function;
   history: any;
+  updateUserState?: UpdateUserState;
 }
 
 interface PState {
   currentUser?: CurrentUserState;
-  user: UserState;
+  user?: UserState;
   updateUser?: User;
+  errorsVisible?: boolean;
+  updateSuccessful?: boolean;
+  updateUserState?: UpdateUserState;
 }
 
 class Profile extends React.Component<PProps, PState> {
+  state = {
+    updateUser: {} as User,
+    errorVisible: false,
+    updateSuccessful: false,
+  }
+
   componentDidMount() {
     const userId = this.props?.currentUser?.currentUser?.id;
     this.props.getUser(userId);
@@ -80,7 +90,11 @@ class Profile extends React.Component<PProps, PState> {
     const userId = this.props?.currentUser?.currentUser?.id;
     this.props.updateUser(userId, this.state?.updateUser);
     e.preventDefault();
-    this.props.history.push('/view-profile');
+    if (this.props.updateUserState?.error) {
+      this.setState({ errorsVisible: true }, () => this.state);
+    } else {
+      this.setState({ updateSuccessful: true });
+    }
   };
 
   handleBirthDateChange = (date: string) => {
@@ -92,8 +106,13 @@ class Profile extends React.Component<PProps, PState> {
   render() {
     const currentUser = this.props.currentUser?.currentUser;
     const user = this.state?.updateUser;
+
     if (!currentUser?.isLoggedIn) {
       return <Redirect to="/" />;
+    }
+
+    if (this.state.updateSuccessful) {
+      return <Redirect to='/view-profile' />;
     }
 
     return (
@@ -106,6 +125,13 @@ class Profile extends React.Component<PProps, PState> {
           <Col lg={9} sm={12} className="content">
             <h1>Update Profile</h1>
             <br />
+            {this.state?.errorVisible &&
+              <Row>
+                <Alert variant='info'>
+                  {this.props?.updateUserState?.error}
+                </Alert>
+              </Row>
+            }
             <Form onSubmit={this.handleProfileUpdatesubmit} noValidate>
               <Form.Row>
                 <FormGroup as={Col} lg={4}>
@@ -279,6 +305,7 @@ class Profile extends React.Component<PProps, PState> {
 const mapStateToProps = (state: PState) => ({
   currentUser: state.currentUser,
   user: state.user,
+  updateUserState: state.updateUserState,
 });
 
 export default connect(mapStateToProps, { getUser, updateUser })(Profile);
