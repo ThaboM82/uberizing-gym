@@ -47,6 +47,19 @@ export class AuthController {
 
   @Post('/reset-password')
   async resetPassword(@Body() payload: { username: string, password: string }): Promise<string> {
+    if (!payload.username || !payload.password) {
+      throw new NotAcceptableError(`
+        <p>Username or Password cannot be empty.</p>
+        <p>Please provide valid username and password and then try again.</p>
+      `);
+    }
+
+    if (payload.password.length < 6 || payload.password.length > 15) {
+      throw new NotAcceptableError(
+        'Password should be between 6 to 15 characters.'
+      );
+    }
+
     return await this.userQueryService.resetPassword(payload.username, payload.password);
   }
 }

@@ -4,7 +4,6 @@ import { Post, Body, Get, Param, JsonController, NotAcceptableError } from 'rout
 import { User } from '../../Entity/User';
 import { IUserRepository } from '../../Interface/IUserRepository';
 import { GymEvent } from '../../Entity';
-// import { validate } from 'class-validator';
 
 @JsonController()
 export class UserController {
@@ -18,9 +17,21 @@ export class UserController {
   async registerUser(@Body() payload: User): Promise<any> {
     if (!payload.username || !payload.email || !payload.password) {
       throw new NotAcceptableError(`
-        <p>Empty form cannot be submitted.</p>
+        <p>Please provide all required fields.</p>
         <p>Please provide valid username, email and password and then try again.</p>
       `);
+    }
+
+    if (!payload.email.match(/^[A-Za-z]+[._-]?[A-Za-z0-9]*[@][A-Za-z0-9]{2,}\.[a-z]{2,6}$/g)) {
+      throw new NotAcceptableError(
+        'Please provide a valid email address.'
+      );
+    }
+
+    if (payload.password.length < 6 || payload.password.length > 15) {
+      throw new NotAcceptableError(
+        'Password should be between 6 to 15 characters.'
+      );
     }
 
     return this.userQueryService.registerUser(payload);
