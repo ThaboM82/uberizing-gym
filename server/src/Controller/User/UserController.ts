@@ -4,6 +4,7 @@ import { Post, Body, Get, Param, JsonController, NotAcceptableError } from 'rout
 import { User } from '../../Entity/User';
 import { IUserRepository } from '../../Interface/IUserRepository';
 import { GymEvent } from '../../Entity';
+import { v4 as uuidv4 } from 'uuid';
 
 @JsonController()
 export class UserController {
@@ -33,6 +34,9 @@ export class UserController {
         'Password should be between 6 to 15 characters.'
       );
     }
+
+    const newUser = payload;
+    newUser.barcode = uuidv4();
 
     return this.userQueryService.registerUser(payload);
   }

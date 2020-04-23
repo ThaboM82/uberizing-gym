@@ -4,6 +4,7 @@ import { SignOptions } from 'jsonwebtoken';
 
 export interface TokenPayload {
   id: number;
+  barcode: string;
   firstName: string;
   lastName: string;
   username: string;

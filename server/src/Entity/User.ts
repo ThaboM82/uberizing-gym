@@ -5,6 +5,9 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  barcode?: string;
+
   @Column({ name: 'first_name' })
   firstName?: string;
 

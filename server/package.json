@@ -50,6 +50,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "@types/uuid": "^7.0.2",
     "body-parser": "^1.19.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.1",
@@ -61,7 +62,8 @@
     "reflect-metadata": "^0.1.13",
     "routing-controllers": "^0.8.0",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.22"
+    "typeorm": "^0.2.22",
+    "uuid": "^7.0.3"
   },
   "jest": {
     "moduleFileExtensions": [

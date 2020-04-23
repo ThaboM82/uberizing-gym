@@ -36,8 +36,8 @@ export class AuthController {
       `);
     }
 
-    const { id, firstName, lastName, username, userType, email } = user;
-    return TokenUtils.getToken({ id, firstName, lastName, username, userType, email });
+    const { id, barcode, firstName, lastName, username, userType, email } = user;
+    return TokenUtils.getToken({ id, barcode, firstName, lastName, username, userType, email });
   }
 
   @Post('/verify-token')

@@ -1,5 +1,6 @@
 export interface User {
   id: number;
+  barcode?: string;
   firstName?: string;
   lastName?: string;
   username: string;
