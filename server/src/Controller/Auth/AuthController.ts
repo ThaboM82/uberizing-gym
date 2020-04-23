@@ -32,7 +32,7 @@ export class AuthController {
     if (!user) {
       throw new NotFoundError(`
         <p>User not found with given username and password.</p>
-        <p>If you are new to the system please sign up <a href='/sign-up'>here</a>.</p>
+        <p>If you are new to the system please use above Register link to create new account.</p>
       `);
     }
 
