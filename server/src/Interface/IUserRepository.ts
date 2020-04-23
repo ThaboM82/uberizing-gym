@@ -7,5 +7,5 @@ export interface IUserRepository {
   getUser: (username: string, password: string) => Promise<User>;
   updateUser: (id: number, payload: Partial<User>) => Promise<User>;
   getUserEvents: (id: number) => Promise<GymEvent[]>;
-  resetPassword: (username: string, newPassword: string) => Promise<string>;
+  resetPassword: (username: string, password: string) => Promise<string>;
 }

@@ -8,7 +8,7 @@ export interface CurrentUserState {
   error: string;
 }
 
-export interface ResetUserState {
+export interface ResetPasswordState {
   pending: boolean;
   reset: string;
   error: string;

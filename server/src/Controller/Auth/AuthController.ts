@@ -46,7 +46,7 @@ export class AuthController {
   }
 
   @Post('/reset-password')
-  async resetPassword(@Body() payload: { username: string, newPassword: string }): Promise<string> {
-    return await this.userQueryService.resetPassword(payload.username, payload.newPassword);
+  async resetPassword(@Body() payload: { username: string, password: string }): Promise<string> {
+    return await this.userQueryService.resetPassword(payload.username, payload.password);
   }
 }

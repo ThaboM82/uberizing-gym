@@ -1,44 +1,44 @@
 import React from 'react';
 import { Container, Row, Col, Form, FormGroup, InputGroup, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faFingerprint, faKey } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
-import { login } from '../../actions';
-import { CurrentUserState } from '../../reducers/auth';
+import { resetPassword } from '../../actions';
 import logo from '../../static/logo.png';
 import { Link, Redirect } from 'react-router-dom';
 import ReactHtmlParser from 'react-html-parser';
+import { ResetPasswordState } from '../../reducers/auth';
 
-interface SIProps {
-  currentUser?: CurrentUserState;
-  login: Function;
+interface RPProps {
+  reset?: ResetPasswordState;
+  resetPassword: Function;
   history: any;
 }
 
-interface SIState {
-  currentUser?: CurrentUserState;
+interface RPState {
+  reset?: ResetPasswordState;
   username: string;
   password: string;
   errorsVisible: boolean;
 }
 
-class SignIn extends React.Component<SIProps, SIState> {
+class ResetPassword extends React.Component<RPProps, RPState> {
   state = {
     username: '',
     password: '',
     errorsVisible: false,
   };
 
-  handleUserLoginChange = (event: any) => {
+  handleResetPasswordChange = (event: any) => {
     const { name, value } = event.currentTarget;
-    this.setState({ [name]: value } as SIState, () => {});
+    this.setState({ [name]: value } as RPState, () => {});
   };
 
-  handleSignInSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  handleResetPasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     const { username, password } = this.state;
-    this.props.login(username, password);
+    this.props.resetPassword(username, password);
     event.preventDefault();
-    if (this.props.currentUser?.error) {
+    if (this.props.reset?.error) {
       this.setState({ errorsVisible: true }, () => this.state);
     }
   };
@@ -46,10 +46,10 @@ class SignIn extends React.Component<SIProps, SIState> {
   dismissErrors = () => this.setState({ errorsVisible: false });
 
   render() {
-    const currentUser = this.props?.currentUser?.currentUser;
-    const error = this.props?.currentUser?.error ?? '';
-    if (currentUser?.isLoggedIn) {
-      return <Redirect to="/dashboard" />;
+    const reset = this.props?.reset?.reset;
+    const error = this.props?.reset?.error ?? '';
+    if (reset) {
+      return <Redirect to="/" />;
     }
 
     return (
@@ -58,6 +58,9 @@ class SignIn extends React.Component<SIProps, SIState> {
           <Col>
             <div className="egym-heading">
               <img src={logo} alt="E Gym" />
+              <h1 className="egym-heading__text" style={{ marginTop: 30 }}>
+                Reset Password
+              </h1>
             </div>
           </Col>
         </Row>
@@ -65,11 +68,11 @@ class SignIn extends React.Component<SIProps, SIState> {
           <Col lg={{ span: 6, offset: 3 }} className="justify-content-md-center">
             <div className="egym-section">
               <div className="egym-section__icon">
-                <FontAwesomeIcon className="egym-section__icon--style" icon={faUsers} size="6x" />
+                <FontAwesomeIcon className="egym-section__icon--style" icon={faFingerprint} size="6x" />
               </div>
               <Form
                 className="egym-section__form egym-section__form--border"
-                onSubmit={this.handleSignInSubmit}
+                onSubmit={this.handleResetPasswordSubmit}
                 noValidate
               >
                 <FormGroup>
@@ -85,7 +88,7 @@ class SignIn extends React.Component<SIProps, SIState> {
                       placeholder="Your Username or Email"
                       name="username"
                       size="lg"
-                      onChange={this.handleUserLoginChange}
+                      onChange={this.handleResetPasswordChange}
                       autoFocus={true}
                     />
                   </InputGroup>
@@ -94,31 +97,31 @@ class SignIn extends React.Component<SIProps, SIState> {
                   <InputGroup>
                     <InputGroup.Prepend>
                       <InputGroup.Text className="egym-section__form--icon">
-                        <FontAwesomeIcon className="egym-section__form--color" icon={faLock}></FontAwesomeIcon>
+                        <FontAwesomeIcon className="egym-section__form--color" icon={faKey}></FontAwesomeIcon>
                       </InputGroup.Text>
                     </InputGroup.Prepend>
                     <Form.Control
                       type="password"
                       className="egym-section__form--input"
-                      placeholder="Your Password"
+                      placeholder="Your New Password"
                       name="password"
                       size="lg"
-                      onChange={this.handleUserLoginChange}
+                      onChange={this.handleResetPasswordChange}
                     />
                   </InputGroup>
                 </FormGroup>
                 <div className="egym-section__form--action">
                   <Button type="submit" className="egym-section__form--action-submit">
-                    Sign In
+                    Reset Password
                   </Button>
                 </div>
               </Form>
               <div className="egym-section--short-menu">
                 <p>
-                  <Link to="/sign-up">Register</Link>
+                  <Link to="/">Login</Link>
                 </p>
                 <p>
-                  <Link to="/reset-password">Forgot Password</Link>
+                  <Link to="/sign-up">Register</Link>
                 </p>
               </div>
             </div>
@@ -138,8 +141,8 @@ class SignIn extends React.Component<SIProps, SIState> {
   }
 }
 
-const mapStateToProps = (state: SIState) => ({
-  currentUser: state.currentUser,
+const mapStateToProps = (state: RPState) => ({
+  reset: state.reset,
 });
 
-export default connect(mapStateToProps, { login })(SignIn);
+export default connect(mapStateToProps, { resetPassword })(ResetPassword);
