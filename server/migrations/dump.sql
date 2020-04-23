@@ -23,15 +23,16 @@ CREATE TABLE `user` (
   `city` VARCHAR(20) DEFAULT NULL,
   `state` VARCHAR(15) DEFAULT NULL,
   `zip` VARCHAR(5) DEFAULT NULL,
-  `country` VARCHAR(15) DEFAULT NULL
+  `country` VARCHAR(15) DEFAULT NULL,
+  `barcode` VARCHAR(100) DEFAULT NULL
 );
 
 INSERT INTO `user`
-(`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`, `street_address`, `city`, `state`, `zip`, `country`)
+(`first_name`, `last_name`, `username`, `password`, `user_type`, `email`, `birth_date`, `phone`, `gender`, `street_address`, `city`, `state`, `zip`, `country`, `barcode`)
 VALUES
-('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA'),
-('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA'),
-('Laurel', 'Fielding', 'lfielding', 'password', 'GYM_MEMBER', 'lfieldin@gmu.edu', '1990-12-12', '1234567890', 'F', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA');
+('Noor', 'Sheikh', 'noorsheikh', 'noorsheikh', 'GYM_MEMBER', 'noorsheikh@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA', '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'),
+('Brandon', 'Stamour', 'brandon', 'password', 'GYM_MEMBER', 'brandon@gmail.com', '1990-12-12', '1234567890', 'M', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA', '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6e'),
+('Laurel', 'Fielding', 'lfielding', 'password', 'GYM_MEMBER', 'lfieldin@gmu.edu', '1990-12-12', '1234567890', 'F', '4400 University Dr', 'Fairfax', 'VA', '22030', 'USA', '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6f');
 
 DROP TABLE IF EXISTS `gym`;
 CREATE TABLE `gym` (

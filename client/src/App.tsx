@@ -12,6 +12,7 @@ import Schedule from './containers/Schedule';
 import ManageMembership from './containers/ManageMembership';
 import Profile from './containers/Profile';
 import ViewProfile from './containers/ViewProfile';
+import ResetPassword from './containers/ResetPassword';
 
 class App extends React.Component<{}, {}> {
   render() {
@@ -28,6 +29,7 @@ class App extends React.Component<{}, {}> {
             <Route path="/manage-membership" exact component={ManageMembership} />
             <Route path="/view-profile" exact component={ViewProfile} />
             <Route path="/update-profile" exact component={Profile} />
+            <Route path="/reset-password" exact component={ResetPassword} />
           </Router>
         </PersistGate>
       </Provider>

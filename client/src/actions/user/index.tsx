@@ -12,19 +12,13 @@ export enum ActionType {
 export const registerUser = (userPayload: User) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = 'http://' + authUrl + ':3030/login';
+    const url = 'http://' + authUrl + ':3030/register-user';
     const user = await axios.post(url, userPayload);
     dispatch({
       type: ActionType.SUCCESS,
       payload: user?.data,
     });
   } catch (error) {
-    // let errorMessage = '';
-    // console.log(error?.response);
-    // const err = error?.response?.data?.errors;
-    // if (err) {
-    //   err.forEach((e: any) => errorMessage += `<p>${Object.values(e.constraints)[0]}</p>`);
-    // }
     dispatch({
       type: ActionType.ERROR,
       error: error?.response?.data?.message || 'User Registration Failed',
