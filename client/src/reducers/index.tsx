@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { registerUserReducer, getUserReducer, getUserEventsReducer } from './user';
-import { userLoginReducer } from './auth';
+import { userLoginReducer, resetPasswordReducer } from './auth';
 import { getAllGymsReducer } from './gym';
 
 const rootReducer = combineReducers({
@@ -8,7 +8,8 @@ const rootReducer = combineReducers({
   currentUser: userLoginReducer,
   user: getUserReducer,
   gyms: getAllGymsReducer,
-  userEvents: getUserEventsReducer
+  userEvents: getUserEventsReducer,
+  resetPassword: resetPasswordReducer,
 });
 
 export default rootReducer;

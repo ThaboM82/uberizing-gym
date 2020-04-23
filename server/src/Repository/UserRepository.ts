@@ -70,4 +70,19 @@ export class UserRepository {
       `)
     ;
   }
+
+  async resetPassword(username: string, newPassword: string): Promise<string> {
+    const user = await (await getRepository(User)).findOne({ username });
+
+    if (!user) {
+      throw new NotFoundError('User not found with given username');
+    }
+
+    user.password = newPassword;
+    await (await getRepository(User)).save(user);
+
+    if (user.password === newPassword) {
+      return 'Password successfully updated';
+    }
+  }
 }

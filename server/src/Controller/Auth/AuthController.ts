@@ -44,4 +44,9 @@ export class AuthController {
   public verifyToken(@Body() payload: { token: string }): string | object {
     return TokenUtils.verifyToken(payload.token);
   }
+
+  @Post('/reset-password')
+  async resetPassword(@Body() payload: { username: string, newPassword: string }): Promise<string> {
+    return await this.userQueryService.resetPassword(payload.username, payload.newPassword);
+  }
 }

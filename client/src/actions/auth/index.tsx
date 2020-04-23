@@ -4,14 +4,14 @@ import { Dispatch } from 'redux';
 import { CurrentUser } from '../../models/CurrentUser';
 import { authUrl } from '../../utils/config';
 
-export enum LoginActions {
-  LOGIN_PENDING = 'LOGIN_PENDING',
-  LOGIN_SUCCESS = 'LOGIN_SUCCEES',
-  LOGIN_ERROR = 'LOGIN_ERROR',
+export enum Action {
+  PENDING = 'PENDING',
+  SUCCESS = 'SUCCEES',
+  ERROR = 'ERROR',
 }
 
 export const login = (username: string, password: string) => async (dispatch: Dispatch) => {
-  dispatch({ type: LoginActions.LOGIN_PENDING });
+  dispatch({ type: Action.PENDING });
 
   try {
     const url = 'http://' + authUrl + ':3030/login';
@@ -23,13 +23,31 @@ export const login = (username: string, password: string) => async (dispatch: Di
       ...decodedToken,
     };
     dispatch({
-      type: LoginActions.LOGIN_SUCCESS,
+      type: Action.SUCCESS,
       payload: currentUser,
     });
   } catch (error) {
     dispatch({
-      type: LoginActions.LOGIN_ERROR,
+      type: Action.ERROR,
       error: error?.response?.data?.message ?? 'Authentication Denied',
+    });
+  }
+};
+
+export const resetPassword = (username: string, password: string) => async (dispatch: Dispatch) => {
+  dispatch({ type: Action.PENDING });
+
+  try {
+    const url = 'http://' + authUrl + ':3030/reset-password';
+    const result = await axios.post(url, { username, password });
+    dispatch({
+      type: Action.SUCCESS,
+      payload: result?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: Action.ERROR,
+      error: error?.response?.data?.message ?? 'Password Reset Failed',
     });
   }
 };

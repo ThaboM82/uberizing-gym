@@ -1,5 +1,5 @@
 import { CurrentUser } from '../../models/CurrentUser';
-import { LoginActions } from '../../actions/auth';
+import { Action } from '../../actions/auth';
 import { AnyAction } from 'redux';
 
 export interface CurrentUserState {
@@ -8,25 +8,57 @@ export interface CurrentUserState {
   error: string;
 }
 
+export interface ResetUserState {
+  pending: boolean;
+  reset: string;
+  error: string;
+}
+
 export const userLoginReducer = (state: any = null, action: AnyAction) => {
   switch (action.type) {
-    case LoginActions.LOGIN_PENDING:
+    case Action.PENDING:
       return {
         ...state,
         pending: true,
       };
-    case LoginActions.LOGIN_SUCCESS:
+    case Action.SUCCESS:
       return {
         ...state,
         pending: false,
         currentUser: action.payload,
         error: null,
       };
-    case LoginActions.LOGIN_ERROR:
+    case Action.ERROR:
       return {
         ...state,
         pending: true,
         currentUser: null,
+        error: action.error,
+      };
+    default:
+      return state;
+  }
+};
+
+export const resetPasswordReducer = (state: any = null, action: AnyAction) => {
+  switch (action.type) {
+    case Action.PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case Action.SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        reset: action.payload,
+        error: null,
+      };
+    case Action.ERROR:
+      return {
+        ...state,
+        pending: true,
+        reset: null,
         error: action.error,
       };
     default:
