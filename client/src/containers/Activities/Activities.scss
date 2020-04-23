@@ -1,0 +1,25 @@
+.activities {
+    svg {
+        color: #FFA500;
+        margin: auto;
+        display: block;
+    }
+
+    .row, .col {
+        text-align: center;
+    }
+}
+
+.table__header {
+    background-color: #ced4da;
+    text-align:center;
+}
+
+.data-column__header {
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.data-column__content {
+    background-color: #ced4da;
+}
