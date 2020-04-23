@@ -12,7 +12,7 @@ export enum ActionType {
 export const registerUser = (userPayload: User) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = 'http://' + authUrl + ':3030/login';
+    const url = 'http://' + authUrl + ':3030/register-user';
     const user = await axios.post(url, userPayload);
     dispatch({
       type: ActionType.SUCCESS,
