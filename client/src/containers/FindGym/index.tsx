@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row, Badge } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThList, faSearch, faMap } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserState } from '../../reducers/auth';
@@ -86,6 +86,12 @@ class FindGym extends React.Component<FGProps, FGState> {
               </Row>
             </Form>
             <Row>
+              <Col md={4}>
+                <div style={{ display: 'flex', lineHeight: .5 }}>
+                  <p style={{ marginTop: 10, marginRight: 10 }}>Filter by: </p>
+                  <Button variant='primary' size='sm'>All Gyms</Button>{' '}
+                  <Button variant='light' size='sm'>Saved Gyms</Button></div>
+              </Col>
               <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>
                 <Button variant={map ? 'primary' : 'secondary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(true)}>
                   <FontAwesomeIcon icon={faMap} />
