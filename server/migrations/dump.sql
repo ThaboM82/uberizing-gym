@@ -51,7 +51,7 @@ INSERT INTO `gym`
 VALUES
 ('LA Fitness', '3550 S Clark St', 'Arlington', 'VA', '22202', 38.844064, -77.052072),
 ('LA Fitness', '6200 Little River Turnpike', 'Alexandria', 'VA', '22312', 38.819833, -77.140574),
-('LA Fitness', '6565 SPRINGFIELD MALL', 'Springfield', 'VA', '22150', 38.775572, -77.174784),
+('LA Fitness', '6565 Springfield Mall', 'Springfield', 'VA', '22150', 38.775572, -77.174784),
 ('LA Fitness', '7867 Heneska Loop', 'Alexandria', 'VA', '22315', 38.742963, -77.163774),
 ('LA Fitness', '13060 Worth Ave', 'Woodbridge', 'VA', '22192', 38.650022, -77.296380),
 ('LA Fitness', '9946 Liberia Ave', 'Manassas', 'VA', '20110', 38.742526, -77.452796),
