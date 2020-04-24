@@ -40,7 +40,7 @@ class Calendar extends React.Component<CProps, CState> {
   componentDidMount() {
     this.props.getUserEvents(this.props?.currentUserId);
     let events = {};
-    this.props.userEvents.events.map((event) => {
+    this.props.userEvents?.events?.map((event) => {
         events[event.id] = event;
     });
     this.setState({ events });
