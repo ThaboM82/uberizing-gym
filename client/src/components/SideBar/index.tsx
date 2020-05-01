@@ -102,7 +102,7 @@ class SideBar extends React.Component<SBProps, SBState> {
               <Col><span style={{ marginLeft: 10 }}>My Activities</span></Col>
             </Row>
           </Nav.Link>
-          <Nav.Link
+          {/* <Nav.Link
             as={NavLink}
             to="/manage-membership"
             className="flex-column egym-sidebar-menu__item"
@@ -112,7 +112,7 @@ class SideBar extends React.Component<SBProps, SBState> {
               <Col md={1}><FontAwesomeIcon icon={faIdCard} /></Col>
               <Col><span style={{ marginLeft: 10 }}>Manage Memebership</span></Col>
             </Row>
-          </Nav.Link>
+          </Nav.Link> */}
         </Nav>
       </React.Fragment>
     );
