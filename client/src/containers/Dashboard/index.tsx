@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 import { CurrentUserState } from '../../reducers/auth';
 import SideBar from '../../components/SideBar';
 import Header from '../../components/Header';
@@ -51,7 +51,6 @@ class Dashboard extends React.Component<DProps, DState> {
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content">
-            <h1>Dashboard</h1>
             <br />
             <Row>
               <Col lg={12} style={{ textAlign: 'center' }}>
@@ -61,6 +60,40 @@ class Dashboard extends React.Component<DProps, DState> {
                   lineColor='#FFA500'
                   width={1}
                 />
+                <h1 style={{ marginTop: 20 }}>Checked In</h1>
+                <h2 style={{ marginTop: 10, fontWeight: 700 }}>00:30:05</h2>
+                <h3 style={{ marginTop: 20, fontWeight: 700, fontSize: 30 }}>Onelife Fitness</h3>
+                <h4>4238 Wilson Blvd # 3018</h4>
+                <h5>Arlington, VA 22203</h5>
+              </Col>
+              <Col lg={{ span: 8, offset: 2 }}>
+                <h1 style={{ marginTop: 20, fontSize: 20 }}>Previous Visits</h1>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Event</th>
+                      <th>Visit Date</th>
+                      <th>Duration</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Family Workout Session</td>
+                      <td>April 16th, 2020</td>
+                      <td>45 minutes</td>
+                    </tr>
+                    <tr>
+                      <td>All Nighter Workout</td>
+                      <td>April 10th, 2020</td>
+                      <td>2 hours</td>
+                    </tr>
+                    <tr>
+                      <td>Health and Food Fair</td>
+                      <td>March 28th, 2020</td>
+                      <td>40 minutes</td>
+                    </tr>
+                  </tbody>
+                </Table>
               </Col>
             </Row>
           </Col>
