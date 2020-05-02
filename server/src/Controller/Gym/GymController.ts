@@ -14,20 +14,20 @@ export class GymController {
 
   @Get('/all-gyms/:id')
   async getAllGyms(@Param('id') id?: number): Promise<Gym[]> {
-    return this.gymRepository.getAllGyms(id);
+    return await this.gymRepository.getAllGyms(id);
   }
 
   @Post('/save-gym')
-  async saveGym(@Body() payload: { gymId: number, userId: number }): Promise<string> {
-    this.gymRepository.saveGym(payload.gymId, payload.userId);
+  async saveGym(@Body() payload: { gymId: number, userId: number }): Promise<Gym[]> {
+    await this.gymRepository.saveGym(payload.gymId, payload.userId);
 
-    return 'Gym saved successfully.';
+    return  await this.gymRepository.getAllGyms(payload.userId);
   }
 
   @Post('/unsave-gym')
-  async unsaveGym(@Body() payload: { gymId: number, userId: number }): Promise<string> {
-    this.gymRepository.unsaveGym(payload.gymId, payload.userId);
+  async unsaveGym(@Body() payload: { gymId: number, userId: number }): Promise<Gym[]> {
+    await this.gymRepository.unsaveGym(payload.gymId, payload.userId);
 
-    return 'Gym unsaved successfully.';
+    return  await this.gymRepository.getAllGyms(payload.userId);
   }
 }

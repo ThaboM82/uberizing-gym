@@ -1,32 +1,19 @@
 import React from 'react';
-import { CurrentUserState } from '../../reducers/auth';
-import { connect } from 'react-redux';
-import { GymsState } from '../../reducers/gym';
-import { getAllGyms } from '../../actions';
 import { Spinner, Col, Card, Button, CardColumns } from 'react-bootstrap';
+import { GymsState } from '../../reducers/gym';
 
 interface GProps {
-  currentUser?: CurrentUserState;
-  gyms: GymsState;
-  getAllGyms: Function;
   currentUserId?: number;
-}
-
-interface GState {
+  saveGym: Function;
+  unsaveGym: Function;
   gyms: GymsState;
 }
 
-class GymListView extends React.Component<GProps, GState> {
-  state = {
-    gyms: {} as GymsState,
-  };
-
-  componentDidMount() {
-    this.props.getAllGyms(this.props?.currentUserId);
-  }
+class GymListView extends React.Component<GProps, {}> {
 
   render() {
     const gyms = this.props?.gyms?.gyms;
+    const userId = this.props.currentUserId;
     const pending = this.props?.gyms?.pending;
     if (pending) {
       return <Col lg={10} style={{ textAlign: 'center', marginTop: 30 }}>
@@ -36,13 +23,16 @@ class GymListView extends React.Component<GProps, GState> {
 
     return (
       <CardColumns>
-        {gyms.map(gym => {
+        {gyms?.map(gym => {
           return <Card key={gym.id} style={{ borderRadius: 0 }}>
             <Card.Body>
               <Card.Title style={{ fontWeight: 700 }}>{gym.name}</Card.Title>
               <Card.Text>{gym.address}</Card.Text>
               <Card.Text>{gym.city} {gym.state} {gym.zipCode}</Card.Text>
-              <Button variant='primary'>{(gym.isSavedGym === '1') ? 'Unsave Gym' : 'Save Gym'}</Button>
+              {gym.isSavedGym === '1'
+                ? <Button variant='secondary' onClick={() => this.props.unsaveGym(gym.id, userId)}>Unsave Gym</Button>
+                : <Button variant='primary' onClick={() => this.props.saveGym(gym.id, userId)}>Save Gym</Button>
+              }
             </Card.Body>
           </Card>
         })}
@@ -51,8 +41,4 @@ class GymListView extends React.Component<GProps, GState> {
   }
 }
 
-export const mapStateToProps = (state: GState) => ({
-  gyms: state.gyms,
-});
-
-export default connect(mapStateToProps, { getAllGyms })(GymListView);
+export default GymListView;

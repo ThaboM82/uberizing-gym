@@ -1,25 +1,19 @@
 import React from 'react';
-import { CurrentUserState } from '../../reducers/auth';
 import { Viewport } from '../../utils/interfaces';
 import ReactMapGL, { Marker, Popup, NavigationControl, ScaleControl  } from 'react-map-gl';
 import { mapToken } from '../../utils/config';
-import { connect } from 'react-redux';
 import { GymsState } from '../../reducers/gym';
-import { getAllGyms } from '../../actions';
 import { Gym } from '../../models/Gym';
 import { Card, Button, Spinner, Col } from 'react-bootstrap';
-import { faAlignCenter } from '@fortawesome/free-solid-svg-icons';
 
 interface MProps {
-  currentUser?: CurrentUserState;
-  gyms: GymsState;
-  getAllGyms: Function;
-  onPinClick: Function;
   currentUserId?: number;
+  saveGym: Function;
+  unsaveGym: Function;
+  gyms: GymsState;
 }
 
 interface MState {
-  gyms: GymsState;
   viewport: Viewport;
   popupInfo?: {
     id: number;
@@ -82,14 +76,24 @@ export const Pins: React.FC<PProps> = (props: PProps) => {
 
 // Start GymInfo
 
-export const GymInfo: React.FC<Gym> = (props: Gym) => {
+interface GProps {
+  gym: Gym;
+  userId: number;
+  saveGym: Function;
+  unsaveGym: Function;
+}
+
+export const GymInfo: React.FC<GProps> = (props: GProps) => {
   return (
     <Card style={{ border: 'none', backgroundColor: 'none' }}>
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
-        {props.address}, {props.city} {props.state} {props.zipCode}
+        <Card.Title>{props.gym.name}</Card.Title>
+        {props.gym.address}, {props.gym.city} {props.gym.state} {props.gym.zipCode}
       </Card.Body>
-      <Button variant='primary'>{(props.isSavedGym === '1') ? 'Unsave Gym' : 'Save Gym'}</Button>
+      {props.gym.isSavedGym === '1'
+        ? <Button variant='primary' onClick={() => { props.unsaveGym(props.gym.id, props.userId) }}>Unsave Gym</Button>
+        : <Button variant='primary' onClick={() => { props.saveGym(props.gym.id, props.userId) }}>Save Gym</Button>
+      }
     </Card>
   );
 }
@@ -119,7 +123,6 @@ class Map extends React.Component<MProps, MState> {
   };
 
   componentDidMount() {
-    this.props.getAllGyms(this.props?.currentUserId);
     const viewport = this.state.viewport;
     this.setState({ viewport });
   }
@@ -131,6 +134,16 @@ class Map extends React.Component<MProps, MState> {
   _onClickMarker = (gym: any) => {
     this.setState({popupInfo: gym});
   };
+
+  handleSaveGame = (gymId: number, userId: number) => {
+    this.props.saveGym(gymId, userId);
+    this.setState({ popupInfo: undefined });
+  }
+
+  handleUnsaveGame = (gymId: number, userId: number) => {
+    this.props.unsaveGym(gymId, userId);
+    this.setState({ popupInfo: undefined });
+  }
 
   _renderPopup() {
     const {popupInfo} = this.state;
@@ -145,7 +158,7 @@ class Map extends React.Component<MProps, MState> {
           closeOnClick={false}
           onClose={() => this.setState({popupInfo: undefined})}
         >
-          <GymInfo { ...popupInfo } />
+          <GymInfo gym={popupInfo} userId={this.props?.currentUserId || 0} saveGym={this.handleSaveGame} unsaveGym={this.handleUnsaveGame} />
         </Popup>
       )
     );
@@ -182,8 +195,4 @@ class Map extends React.Component<MProps, MState> {
   }
 }
 
-export const mapStateToProps = (state: MState) => ({
-  gyms: state.gyms,
-});
-
-export default connect(mapStateToProps, { getAllGyms })(Map);
+export default Map;

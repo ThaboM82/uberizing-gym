@@ -9,13 +9,19 @@ import SideBar from '../../components/SideBar';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import GymListView from '../GymListView';
-
+import { GymsState } from '../../reducers/gym';
+import { getAllGyms, saveGym, unsaveGym } from '../../actions';
 interface FGProps {
   currentUser?: CurrentUserState;
   history: any;
+  saveGym: Function;
+  unsaveGym: Function;
+  gyms: GymsState;
+  getAllGyms: Function;
 }
 
 interface FGState {
+  gyms: GymsState;
   currentUser?: CurrentUserState;
   map: boolean;
 }
@@ -23,7 +29,20 @@ interface FGState {
 class FindGym extends React.Component<FGProps, FGState> {
   state = {
     map: true,
+    gyms: {} as GymsState,
   };
+
+  componentDidMount() {
+    this.props.getAllGyms(this.props.currentUser?.currentUser?.id);
+  }
+
+  handleSaveGym = (gymId: number, userId: number) => {
+    this.props.saveGym(gymId, userId);
+  }
+
+  handleUnsaveGym = (gymId: number, userId: number) => {
+    this.props.unsaveGym(gymId, userId);
+  }
 
   handleInputChange = (event: any) => {};
 
@@ -33,12 +52,9 @@ class FindGym extends React.Component<FGProps, FGState> {
     }
   };
 
-  onSearch = (event: any) => {};
-
-  onPinClick = (gym: any) => {};
-
   render() {
     const map = this.state.map;
+    const gyms = this.props.gyms;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
       return <Redirect to="/" />;
@@ -103,8 +119,8 @@ class FindGym extends React.Component<FGProps, FGState> {
             </Row>
             <Row>
               <Col lg={10}>
-                {map && <Map currentUserId={currentUser?.id} onPinClick={this.onPinClick} />}
-                {!map && <GymListView currentUserId={currentUser?.id} />}
+                {map && <Map gyms={gyms} saveGym={this.handleSaveGym} unsaveGym={this.handleUnsaveGym} currentUserId={currentUser?.id} />}
+                {!map && <GymListView gyms={gyms} saveGym={this.handleSaveGym} unsaveGym={this.handleUnsaveGym} currentUserId={currentUser?.id} />}
               </Col>
             </Row>
           </Col>
@@ -115,7 +131,8 @@ class FindGym extends React.Component<FGProps, FGState> {
 }
 
 const mapStateToProps = (state: FGState) => ({
+  gyms: state.gyms,
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps, {})(FindGym);
+export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym })(FindGym);

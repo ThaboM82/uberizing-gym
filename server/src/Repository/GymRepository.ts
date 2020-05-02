@@ -14,6 +14,7 @@ export class GymRepository implements IGymRepository {
     return await (await getDBManager())
       .query(`
       SELECT
+        Q.id,
         Q.name,
         Q.address,
         Q.city,
