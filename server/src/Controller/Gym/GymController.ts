@@ -30,4 +30,10 @@ export class GymController {
 
     return  await this.gymRepository.getAllGyms(payload.userId);
   }
+
+  @Get('/saved-gyms/:id')
+  async getAllSavedGyms(@Param('id') id?: number): Promise<Gym[]> {
+    const gyms = await this.gymRepository.getAllGyms(id);
+    return gyms?.filter(gym => gym.isSavedGym == 1);
+  }
 }

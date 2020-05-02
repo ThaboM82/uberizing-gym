@@ -91,7 +91,7 @@ export const GymInfo: React.FC<GProps> = (props: GProps) => {
         {props.gym.address}, {props.gym.city} {props.gym.state} {props.gym.zipCode}
       </Card.Body>
       {props.gym.isSavedGym === '1'
-        ? <Button variant='primary' onClick={() => { props.unsaveGym(props.gym.id, props.userId) }}>Unsave Gym</Button>
+        ? <Button variant='secondary' onClick={() => { props.unsaveGym(props.gym.id, props.userId) }}>Unsave Gym</Button>
         : <Button variant='primary' onClick={() => { props.saveGym(props.gym.id, props.userId) }}>Save Gym</Button>
       }
     </Card>

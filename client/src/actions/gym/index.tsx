@@ -58,3 +58,20 @@ export const unsaveGym = (gymId: number, userId: number) => async (dispatch: Dis
     });
   }
 }
+
+export const getAllSavedGyms = (id?: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+
+  try {
+    const gyms = await Axios.get(`http://${authUrl}:3030/saved-gyms/${id}`);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: gyms?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message,
+    });
+  }
+}
