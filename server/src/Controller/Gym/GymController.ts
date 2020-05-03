@@ -42,4 +42,28 @@ export class GymController {
     const gyms = await this.gymRepository.getAllGyms(id);
     return gyms?.filter(gym => gym.isSavedGym != 1);
   }
+
+  @Post('/search-gyms/:id')
+  async searchGyms(@Param('id') id?: number, @Body() payload?: { keyword?: string, location?: string }): Promise<Gym[]> {
+    const allGyms = await this.gymRepository.getAllGyms(id);
+    return allGyms?.filter(gym => {
+      if (gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && !payload?.location) {
+        return gym;
+      } else if (!payload?.keyword && gym.city.match(payload?.location?.[0]?.toUpperCase())) {
+        return gym;
+      } else if (!payload?.keyword && gym.state.match(payload?.location?.[0]?.toUpperCase())) {
+        return gym;
+      } else if (!payload?.keyword && gym.zipCode.match(payload?.location?.[0]?.toUpperCase())) {
+        return gym;
+      } else if (gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && (
+        gym.city.match(payload?.location?.[0]?.toUpperCase()) ||
+        gym.state.match(payload?.location?.[0]?.toUpperCase()) ||
+        gym.zipCode.match(payload?.location?.[0]?.toUpperCase())
+      )) {
+        return gym;
+      } else if (!payload?.keyword || !payload?.location) {
+        return gym;
+      }
+    });
+  }
 }
