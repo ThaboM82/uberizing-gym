@@ -46,14 +46,13 @@ export class GymController {
   @Post('/search-gyms/:id')
   async searchGyms(@Param('id') id?: number, @Body() payload?: { keyword?: string, location?: string }): Promise<Gym[]> {
     const allGyms = await this.gymRepository.getAllGyms(id);
+    const keyword_regex = new RegExp(payload?.keyword, 'i');
+    const location_regex = new RegExp(payload?.location, 'i');
     return allGyms?.filter(gym =>
-      gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && !payload?.location ||
-      gym.city.match(payload?.location?.[0]?.toUpperCase()) && !payload?.keyword ||
-      gym.state.match(payload?.location?.[0]?.toUpperCase()) && !payload?.keyword ||
-      gym.zipCode.match(payload?.location) && !payload?.keyword ||
-      gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && gym.city.match(payload?.location?.[0]?.toUpperCase()) ||
-      gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && gym.state.match(payload?.location?.[0]?.toUpperCase()) ||
-      gym.name.match(payload?.keyword?.[0]?.toUpperCase()) && gym.zipCode.match(payload?.location)
+      gym.name.match(keyword_regex) &&
+      (gym.city.match(location_regex) ||
+      gym.state.match(location_regex) ||
+      gym.zipCode.match(location_regex))
     );
   }
 }

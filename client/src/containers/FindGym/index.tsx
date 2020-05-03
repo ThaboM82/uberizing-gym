@@ -56,18 +56,13 @@ class FindGym extends React.Component<FGProps, FGState> {
   handleSearchInputChange = (event: any) => {
     const userId = this.props?.currentUser?.currentUser?.id;
     const { name, value } = event.currentTarget;
-    const searchPayload = {} as { keyword?: string, location?: string};
+    const searchPayload = this.state.searchPayload;
     if (name === 'keyword') {
       searchPayload['keyword'] = value;
     } else if (name === 'location') {
       searchPayload['location'] = value;
     }
     this.setState({ searchPayload }, () => this.state);
-    this.props.searchGyms(userId, this.state.searchPayload);
-  }
-
-  handleSearchSubmit = (event: any) => {
-    const userId = this.props?.currentUser?.currentUser?.id;
     this.props.searchGyms(userId, this.state.searchPayload);
   }
 
@@ -105,10 +100,10 @@ class FindGym extends React.Component<FGProps, FGState> {
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content">
-            <Form onSubmit={this.handleSearchSubmit} noValidate>
+            <Form noValidate>
               <Row>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
+                  <Form.Label className="egym-section__form--label">Keyword</Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
@@ -129,12 +124,6 @@ class FindGym extends React.Component<FGProps, FGState> {
                     size="lg"
                     onChange={this.handleSearchInputChange}
                   />
-                </FormGroup>
-                <FormGroup as={Col} lg={2} style={{ textAlign: 'left' }}>
-                  <Button type="submit" variant="primary" className='egym-section__form--action-icon' block>
-                    <FontAwesomeIcon icon={faSearch} style={{ marginRight: 20 }} />
-                    Search
-                  </Button>
                 </FormGroup>
               </Row>
             </Form>
