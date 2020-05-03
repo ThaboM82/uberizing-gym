@@ -70,12 +70,12 @@ class ViewProfile extends React.Component<VPProps, VPState> {
                           </td>
                           <td>{user?.username}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                           <td>
                             <strong>Password</strong>
                           </td>
                           <td>******</td>
-                        </tr>
+                        </tr> */}
                         <tr>
                           <td>
                             <strong>Gender</strong>
