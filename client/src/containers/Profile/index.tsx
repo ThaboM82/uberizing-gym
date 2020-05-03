@@ -176,7 +176,7 @@ class Profile extends React.Component<PProps, PState> {
               </Form.Row>
               <br />
               <Form.Row>
-                <FormGroup as={Col} lg={4}>
+                <FormGroup as={Col} lg={1}>
                   <Form.Label className="egym-section__form--label">Gender</Form.Label>
                   <Form.Check
                     type="radio"
@@ -195,7 +195,7 @@ class Profile extends React.Component<PProps, PState> {
                     onChange={this.handleProfileUpdateChange}
                   />
                 </FormGroup>
-                <FormGroup as={Col} lg={4}>
+                <FormGroup as={Col} lg={5}>
                   <Form.Label className="egym-section__form--label">Email</Form.Label>
                   <Form.Control
                     type="email"
@@ -207,7 +207,7 @@ class Profile extends React.Component<PProps, PState> {
                     value={user?.email ?? ''}
                   />
                 </FormGroup>
-                <FormGroup as={Col} lg={4}>
+                <FormGroup as={Col} lg={2}>
                   <Form.Label className="egym-section__form--label">Phone Number</Form.Label>
                   <Form.Control
                     type="text"

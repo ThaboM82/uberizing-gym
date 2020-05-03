@@ -32,13 +32,15 @@ interface FGState {
     keyword?: string;
     location?: string;
   }
+  filter: string;
 }
 
 class FindGym extends React.Component<FGProps, FGState> {
   state = {
     map: true,
     gyms: {} as GymsState,
-    searchPayload: {} as { keyword?: string, location?: string }
+    searchPayload: {} as { keyword?: string, location?: string },
+    filter: 'all'
   };
 
   componentDidMount() {
@@ -47,10 +49,12 @@ class FindGym extends React.Component<FGProps, FGState> {
 
   handleSaveGym = (gymId: number, userId: number) => {
     this.props.saveGym(gymId, userId);
+    this.setState({ filter: 'all' });
   }
 
   handleUnsaveGym = (gymId: number, userId: number) => {
     this.props.unsaveGym(gymId, userId);
+    this.setState({ filter: 'all' });
   }
 
   handleSearchInputChange = (event: any) => {
@@ -74,18 +78,22 @@ class FindGym extends React.Component<FGProps, FGState> {
 
   showSavedGymsOnly = () => {
     this.props.getAllSavedGyms(this.props.currentUser?.currentUser?.id);
+    this.setState({ filter: 'saved' });
   }
 
   showUnsavedGymsOnly = () => {
     this.props.getAllUnsavedGyms(this.props.currentUser?.currentUser?.id);
+    this.setState({ filter: 'unsaved' });
   }
 
   showAllGyms = () => {
     this.props.getAllGyms(this.props.currentUser?.currentUser?.id);
+    this.setState({ filter: 'all' });
   }
 
   render() {
     const map = this.state.map;
+    const filter = this.state.filter;
     const gyms = this.props.gyms;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
@@ -131,9 +139,9 @@ class FindGym extends React.Component<FGProps, FGState> {
               <Col md={4}>
                 <div style={{ display: 'flex', lineHeight: .5 }}>
                   <p style={{ marginTop: 10, marginRight: 10 }}>Filter by: </p>
-                  <Button variant='link' size='sm' onClick={this.showAllGyms}>All Gyms</Button>{' '}
-                  <Button variant='link' size='sm' onClick={this.showSavedGymsOnly}>Saved Gyms</Button>
-                  <Button variant='link' size='sm' onClick={this.showUnsavedGymsOnly}>Unsaved Gyms</Button>
+                  <Button variant={filter === 'all' ? 'primary' : 'secondary'} size='sm' onClick={this.showAllGyms}>All Gyms</Button>{' '}
+                  <Button variant={filter === 'saved' ? 'primary' : 'secondary'} size='sm' onClick={this.showSavedGymsOnly}>Saved Gyms</Button>
+                  <Button variant={filter === 'unsaved' ? 'primary' : 'secondary'} size='sm' onClick={this.showUnsavedGymsOnly}>Unsaved Gyms</Button>
                 </div>
               </Col>
               <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>
