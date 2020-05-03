@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import GymListView from '../GymListView';
 import { GymsState } from '../../reducers/gym';
-import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms } from '../../actions';
+import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms, searchGyms } from '../../actions';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -21,18 +21,24 @@ interface FGProps {
   getAllGyms: Function;
   getAllSavedGyms: Function;
   getAllUnsavedGyms: Function;
+  searchGyms: Function;
 }
 
 interface FGState {
   gyms: GymsState;
   currentUser?: CurrentUserState;
   map: boolean;
+  searchPayload?: {
+    keyword?: string;
+    location?: string;
+  }
 }
 
 class FindGym extends React.Component<FGProps, FGState> {
   state = {
     map: true,
     gyms: {} as GymsState,
+    searchPayload: {} as { keyword?: string, location?: string }
   };
 
   componentDidMount() {
@@ -47,7 +53,23 @@ class FindGym extends React.Component<FGProps, FGState> {
     this.props.unsaveGym(gymId, userId);
   }
 
-  handleInputChange = (event: any) => {};
+  handleSearchInputChange = (event: any) => {
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const { name, value } = event.currentTarget;
+    const searchPayload = {} as { keyword?: string, location?: string};
+    if (name === 'keyword') {
+      searchPayload['keyword'] = value;
+    } else if (name === 'location') {
+      searchPayload['location'] = value;
+    }
+    this.setState({ searchPayload }, () => this.state);
+    this.props.searchGyms(userId, this.state.searchPayload);
+  }
+
+  handleSearchSubmit = (event: any) => {
+    const userId = this.props?.currentUser?.currentUser?.id;
+    this.props.searchGyms(userId, this.state.searchPayload);
+  }
 
   toggleView = (map: boolean) => {
     if (this.state.map !== map) {
@@ -83,7 +105,7 @@ class FindGym extends React.Component<FGProps, FGState> {
             <SideBar />
           </Col>
           <Col lg={9} sm={12} className="content">
-            <Form noValidate>
+            <Form onSubmit={this.handleSearchSubmit} noValidate>
               <Row>
                 <FormGroup as={Col} lg={4}>
                   <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
@@ -91,9 +113,9 @@ class FindGym extends React.Component<FGProps, FGState> {
                     type="text"
                     className="egym-section__form--input"
                     placeholder="Enter gym name, e.g. Gold Gym"
-                    name="firstName"
+                    name="keyword"
                     size="lg"
-                    onChange={() => {}}
+                    onChange={this.handleSearchInputChange}
                     autoFocus={true}
                   />
                 </FormGroup>
@@ -103,9 +125,9 @@ class FindGym extends React.Component<FGProps, FGState> {
                     type="text"
                     className="egym-section__form--input"
                     placeholder="Enter gym location e.g. city, state, zip"
-                    name="firstName"
+                    name="location"
                     size="lg"
-                    onChange={() => {}}
+                    onChange={this.handleSearchInputChange}
                   />
                 </FormGroup>
                 <FormGroup as={Col} lg={2} style={{ textAlign: 'left' }}>
@@ -152,4 +174,4 @@ const mapStateToProps = (state: FGState) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms })(FindGym);
+export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms, searchGyms })(FindGym);

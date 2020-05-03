@@ -92,3 +92,20 @@ export const getAllUnsavedGyms = (id?: number) => async (dispatch: Dispatch) => 
     });
   }
 }
+
+export const searchGyms = (id?: number, payload?: { keyword?: string; location?: string }) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+
+  try {
+    const gyms = await Axios.post(`http://${authUrl}:3030/search-gyms/${id}`, payload);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: gyms?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message,
+    });
+  }
+}
