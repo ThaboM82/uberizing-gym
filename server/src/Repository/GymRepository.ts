@@ -1,14 +1,20 @@
-import { Service } from "typedi";
+import { Service, ObjectType } from "typedi";
 import { IGymRepository } from "../Interface/IGymRepository";
-import { Gym } from "../Entity";
-import { getDBManager } from "../Config";
+import { Gym, SavedGym } from "../Entity";
+import { getDBManager, getRepository } from "../Config";
+import { Repository } from "typeorm";
 
 @Service()
 export class GymRepository implements IGymRepository {
+  private async getRepository<T>(repo: ObjectType<T>): Promise<Repository<T>> {
+    return await getRepository(repo);
+  }
+
   async getAllGyms(id?: number): Promise<Gym[]> {
     return await (await getDBManager())
       .query(`
       SELECT
+        Q.id,
         Q.name,
         Q.address,
         Q.city,
@@ -53,4 +59,15 @@ export class GymRepository implements IGymRepository {
     ;
   }
 
+  async saveGym(gymId: number, userId: number): Promise<void> {
+    const saveGym = new SavedGym();
+    saveGym.gymId = gymId;
+    saveGym.userId = userId;
+
+    await (await this.getRepository(SavedGym)).save(saveGym);
+  }
+
+  async unsaveGym(gymId: number, userId: number): Promise<void> {
+    await (await this.getRepository(SavedGym)).delete({ gymId, userId });
+  }
 }

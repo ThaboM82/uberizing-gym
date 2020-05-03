@@ -1,4 +1,4 @@
-import { JsonController, Get, Param } from "routing-controllers";
+import { JsonController, Get, Param, Post, Body } from "routing-controllers";
 import { IGymRepository } from "../../Interface/IGymRepository";
 import Container from "typedi";
 import { GymRepository } from "../../Repository";
@@ -14,6 +14,32 @@ export class GymController {
 
   @Get('/all-gyms/:id')
   async getAllGyms(@Param('id') id?: number): Promise<Gym[]> {
-    return this.gymRepository.getAllGyms(id);
+    return await this.gymRepository.getAllGyms(id);
+  }
+
+  @Post('/save-gym')
+  async saveGym(@Body() payload: { gymId: number, userId: number }): Promise<Gym[]> {
+    await this.gymRepository.saveGym(payload.gymId, payload.userId);
+
+    return  await this.gymRepository.getAllGyms(payload.userId);
+  }
+
+  @Post('/unsave-gym')
+  async unsaveGym(@Body() payload: { gymId: number, userId: number }): Promise<Gym[]> {
+    await this.gymRepository.unsaveGym(payload.gymId, payload.userId);
+
+    return  await this.gymRepository.getAllGyms(payload.userId);
+  }
+
+  @Get('/saved-gyms/:id')
+  async getAllSavedGyms(@Param('id') id?: number): Promise<Gym[]> {
+    const gyms = await this.gymRepository.getAllGyms(id);
+    return gyms?.filter(gym => gym.isSavedGym == 1);
+  }
+
+  @Get('/unsaved-gyms/:id')
+  async getAllUnsavedGyms(@Param('id') id?: number): Promise<Gym[]> {
+    const gyms = await this.gymRepository.getAllGyms(id);
+    return gyms?.filter(gym => gym.isSavedGym != 1);
   }
 }
