@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import GymListView from '../GymListView';
 import { GymsState } from '../../reducers/gym';
-import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms } from '../../actions';
+import { getAllGyms, saveGym, unsaveGym, searchGyms } from '../../actions';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -19,22 +19,25 @@ interface FGProps {
   unsaveGym: Function;
   gyms: GymsState;
   getAllGyms: Function;
-  getAllSavedGyms: Function;
-  getAllUnsavedGyms: Function;
+  searchGyms: Function;
 }
 
 interface FGState {
   gyms: GymsState;
   currentUser?: CurrentUserState;
   map: boolean;
-  filter: string;
+  searchPayload?: {
+    keyword?: string;
+    location?: string;
+    filter?: string;
+  }
 }
 
 class FindGym extends React.Component<FGProps, FGState> {
   state = {
     map: true,
     gyms: {} as GymsState,
-    filter: 'all'
+    searchPayload: { filter: 'all' } as { keyword?: string, location?: string, filter?: string }
   };
 
   componentDidMount() {
@@ -43,15 +46,30 @@ class FindGym extends React.Component<FGProps, FGState> {
 
   handleSaveGym = (gymId: number, userId: number) => {
     this.props.saveGym(gymId, userId);
-    this.setState({ filter: 'all' });
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
   }
 
   handleUnsaveGym = (gymId: number, userId: number) => {
     this.props.unsaveGym(gymId, userId);
-    this.setState({ filter: 'all' });
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
   }
 
-  handleInputChange = (event: any) => {};
+  handleSearchInputChange = (event: any) => {
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const { name, value } = event.currentTarget;
+    const searchPayload = this.state.searchPayload;
+    if (name === 'keyword') {
+      searchPayload['keyword'] = value;
+    } else if (name === 'location') {
+      searchPayload['location'] = value;
+    }
+    this.setState({ searchPayload }, () => this.state);
+    this.props.searchGyms(userId, this.state.searchPayload);
+  }
 
   toggleView = (map: boolean) => {
     if (this.state.map !== map) {
@@ -60,23 +78,32 @@ class FindGym extends React.Component<FGProps, FGState> {
   };
 
   showSavedGymsOnly = () => {
-    this.props.getAllSavedGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'saved' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'saved';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   showUnsavedGymsOnly = () => {
-    this.props.getAllUnsavedGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'unsaved' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'unsaved';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   showAllGyms = () => {
-    this.props.getAllGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'all' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   render() {
     const map = this.state.map;
-    const filter = this.state.filter;
+    const filter = this.state.searchPayload?.filter;
     const gyms = this.props.gyms;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
@@ -94,14 +121,14 @@ class FindGym extends React.Component<FGProps, FGState> {
             <Form noValidate>
               <Row>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">Search Keyword</Form.Label>
+                  <Form.Label className="egym-section__form--label">Gym</Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
                     placeholder="Enter gym name, e.g. Gold Gym"
-                    name="firstName"
+                    name="keyword"
                     size="lg"
-                    onChange={() => {}}
+                    onChange={this.handleSearchInputChange}
                     autoFocus={true}
                   />
                 </FormGroup>
@@ -111,16 +138,10 @@ class FindGym extends React.Component<FGProps, FGState> {
                     type="text"
                     className="egym-section__form--input"
                     placeholder="Enter gym location e.g. city, state, zip"
-                    name="firstName"
+                    name="location"
                     size="lg"
-                    onChange={() => {}}
+                    onChange={this.handleSearchInputChange}
                   />
-                </FormGroup>
-                <FormGroup as={Col} lg={2} style={{ textAlign: 'left' }}>
-                  <Button type="submit" variant="primary" className='egym-section__form--action-icon' block>
-                    <FontAwesomeIcon icon={faSearch} style={{ marginRight: 20 }} />
-                    Search
-                  </Button>
                 </FormGroup>
               </Row>
             </Form>
@@ -160,4 +181,4 @@ const mapStateToProps = (state: FGState) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms })(FindGym);
+export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, searchGyms })(FindGym);
