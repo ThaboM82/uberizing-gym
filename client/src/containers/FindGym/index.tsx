@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import GymListView from '../GymListView';
 import { GymsState } from '../../reducers/gym';
-import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms, searchGyms } from '../../actions';
+import { getAllGyms, saveGym, unsaveGym, searchGyms } from '../../actions';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -19,8 +19,6 @@ interface FGProps {
   unsaveGym: Function;
   gyms: GymsState;
   getAllGyms: Function;
-  getAllSavedGyms: Function;
-  getAllUnsavedGyms: Function;
   searchGyms: Function;
 }
 
@@ -31,16 +29,15 @@ interface FGState {
   searchPayload?: {
     keyword?: string;
     location?: string;
+    filter?: string;
   }
-  filter: string;
 }
 
 class FindGym extends React.Component<FGProps, FGState> {
   state = {
     map: true,
     gyms: {} as GymsState,
-    searchPayload: {} as { keyword?: string, location?: string },
-    filter: 'all'
+    searchPayload: { filter: 'all' } as { keyword?: string, location?: string, filter?: string }
   };
 
   componentDidMount() {
@@ -49,12 +46,16 @@ class FindGym extends React.Component<FGProps, FGState> {
 
   handleSaveGym = (gymId: number, userId: number) => {
     this.props.saveGym(gymId, userId);
-    this.setState({ filter: 'all' });
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
   }
 
   handleUnsaveGym = (gymId: number, userId: number) => {
     this.props.unsaveGym(gymId, userId);
-    this.setState({ filter: 'all' });
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
   }
 
   handleSearchInputChange = (event: any) => {
@@ -77,23 +78,32 @@ class FindGym extends React.Component<FGProps, FGState> {
   };
 
   showSavedGymsOnly = () => {
-    this.props.getAllSavedGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'saved' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'saved';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   showUnsavedGymsOnly = () => {
-    this.props.getAllUnsavedGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'unsaved' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'unsaved';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   showAllGyms = () => {
-    this.props.getAllGyms(this.props.currentUser?.currentUser?.id);
-    this.setState({ filter: 'all' });
+    const userId = this.props?.currentUser?.currentUser?.id;
+    const searchPayload = this.state.searchPayload;
+    searchPayload.filter = 'all';
+    this.setState({ searchPayload });
+    this.props.searchGyms(userId, this.state.searchPayload);
   }
 
   render() {
     const map = this.state.map;
-    const filter = this.state.filter;
+    const filter = this.state.searchPayload?.filter;
     const gyms = this.props.gyms;
     const currentUser = this.props?.currentUser?.currentUser;
     if (!currentUser?.isLoggedIn) {
@@ -171,4 +181,4 @@ const mapStateToProps = (state: FGState) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms, searchGyms })(FindGym);
+export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, searchGyms })(FindGym);

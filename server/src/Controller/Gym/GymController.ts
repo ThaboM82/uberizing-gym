@@ -31,28 +31,26 @@ export class GymController {
     return  await this.gymRepository.getAllGyms(payload.userId);
   }
 
-  @Get('/saved-gyms/:id')
-  async getAllSavedGyms(@Param('id') id?: number): Promise<Gym[]> {
-    const gyms = await this.gymRepository.getAllGyms(id);
-    return gyms?.filter(gym => gym.isSavedGym == 1);
-  }
-
-  @Get('/unsaved-gyms/:id')
-  async getAllUnsavedGyms(@Param('id') id?: number): Promise<Gym[]> {
-    const gyms = await this.gymRepository.getAllGyms(id);
-    return gyms?.filter(gym => gym.isSavedGym != 1);
-  }
-
   @Post('/search-gyms/:id')
-  async searchGyms(@Param('id') id?: number, @Body() payload?: { keyword?: string, location?: string }): Promise<Gym[]> {
+  async searchGyms(@Param('id') id?: number, @Body() payload?: { keyword?: string, location?: string, filter?: string }): Promise<Gym[]> {
     const allGyms = await this.gymRepository.getAllGyms(id);
     const keyword_regex = new RegExp(payload?.keyword, 'i');
     const location_regex = new RegExp(payload?.location, 'i');
-    return allGyms?.filter(gym =>
+    const searchResult = allGyms?.filter(gym =>
       gym.name.match(keyword_regex) &&
       (gym.city.match(location_regex) ||
       gym.state.match(location_regex) ||
       gym.zipCode.match(location_regex))
     );
+
+    return searchResult.filter(result => {
+      if (payload?.filter === 'all') {
+        return result;
+      } else if (payload?.filter === 'saved') {
+        return result.isSavedGym == 1;
+      } else if (payload?.filter == 'unsaved') {
+        return result.isSavedGym != 1;
+      }
+    });
   }
 }
