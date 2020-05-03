@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import GymListView from '../GymListView';
 import { GymsState } from '../../reducers/gym';
-import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms } from '../../actions';
+import { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms } from '../../actions';
 
 interface FGProps {
   currentUser?: CurrentUserState;
@@ -20,6 +20,7 @@ interface FGProps {
   gyms: GymsState;
   getAllGyms: Function;
   getAllSavedGyms: Function;
+  getAllUnsavedGyms: Function;
 }
 
 interface FGState {
@@ -56,6 +57,10 @@ class FindGym extends React.Component<FGProps, FGState> {
 
   showSavedGymsOnly = () => {
     this.props.getAllSavedGyms(this.props.currentUser?.currentUser?.id);
+  }
+
+  showUnsavedGymsOnly = () => {
+    this.props.getAllUnsavedGyms(this.props.currentUser?.currentUser?.id);
   }
 
   showAllGyms = () => {
@@ -115,8 +120,10 @@ class FindGym extends React.Component<FGProps, FGState> {
               <Col md={4}>
                 <div style={{ display: 'flex', lineHeight: .5 }}>
                   <p style={{ marginTop: 10, marginRight: 10 }}>Filter by: </p>
-                  <Button variant='primary' size='sm' onClick={this.showAllGyms}>All Gyms</Button>{' '}
-                  <Button variant='light' size='sm' onClick={this.showSavedGymsOnly}>Saved Gyms</Button></div>
+                  <Button variant='link' size='sm' onClick={this.showAllGyms}>All Gyms</Button>{' '}
+                  <Button variant='link' size='sm' onClick={this.showSavedGymsOnly}>Saved Gyms</Button>
+                  <Button variant='link' size='sm' onClick={this.showUnsavedGymsOnly}>Unsaved Gyms</Button>
+                </div>
               </Col>
               <Col md={{ span: 2, offset: 8 }} className="egym-section__view-toggle" style={{ textAlign: 'right' }}>
                 <Button variant={map ? 'primary' : 'secondary'} className="egym-section__view-toggle--icon" onClick={() => this.toggleView(true)}>
@@ -145,4 +152,4 @@ const mapStateToProps = (state: FGState) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms })(FindGym);
+export default connect(mapStateToProps, { getAllGyms, saveGym, unsaveGym, getAllSavedGyms, getAllUnsavedGyms })(FindGym);

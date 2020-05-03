@@ -75,3 +75,20 @@ export const getAllSavedGyms = (id?: number) => async (dispatch: Dispatch) => {
     });
   }
 }
+
+export const getAllUnsavedGyms = (id?: number) => async (dispatch: Dispatch) => {
+  dispatch({ type: ActionType.PENDING });
+
+  try {
+    const gyms = await Axios.get(`http://${authUrl}:3030/unsaved-gyms/${id}`);
+    dispatch({
+      type: ActionType.SUCCESS,
+      payload: gyms?.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ActionType.ERROR,
+      error: error?.response?.data?.message,
+    });
+  }
+}
