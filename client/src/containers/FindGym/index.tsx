@@ -103,7 +103,7 @@ class FindGym extends React.Component<FGProps, FGState> {
             <Form noValidate>
               <Row>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">Keyword</Form.Label>
+                  <Form.Label className="egym-section__form--label">Gym</Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
