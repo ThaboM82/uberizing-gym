@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Col, Form, FormGroup, Button, Row, Badge } from 'react-bootstrap';
+import { Container, Col, Form, FormGroup, Button, Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThList, faSearch, faMap } from '@fortawesome/free-solid-svg-icons';
+import { faThList, faMap } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserState } from '../../reducers/auth';
 import Map from '../Map';
 import Header from '../../components/Header';

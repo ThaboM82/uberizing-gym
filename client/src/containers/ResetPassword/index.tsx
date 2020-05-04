@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Form, FormGroup, InputGroup, Button, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faFingerprint, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faFingerprint, faKey } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { resetPassword } from '../../actions';
 import logo from '../../static/logo.png';
