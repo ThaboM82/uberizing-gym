@@ -27,6 +27,15 @@ class ViewProfile extends React.Component<VPProps, VPState> {
     this.props.getUser(userId);
   }
 
+  getGender = (gender?: string) => {
+    switch (gender) {
+      case 'M': return 'Male';
+      case 'F': return 'Female';
+      case 'U':
+      default: return 'Other';
+    }
+  }
+
   render() {
     const currentUser = this.props.currentUser?.currentUser;
     const user = this.props?.user?.user;
@@ -80,7 +89,9 @@ class ViewProfile extends React.Component<VPProps, VPState> {
                           <td>
                             <strong>Gender</strong>
                           </td>
-                          <td>{user?.gender === 'M' ? 'Male' : 'Female'}</td>
+                          <td>
+                            {this.getGender(user?.gender)}
+                          </td>
                         </tr>
                         <tr>
                           <td>

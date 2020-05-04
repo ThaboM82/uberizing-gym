@@ -101,14 +101,24 @@ class Profile extends React.Component<PProps, PState> {
       !email?.match(/^[A-Za-z]+[._-]?[A-Za-z0-9]*[@][A-Za-z0-9]{2,}\.[a-z]{2,6}$/g);
   }
 
+  isInvalidPhone = (phone?: string) => {
+    return !phone?.match(/^([2-9][0-9]{2}[1-9][0-9]{2}[0-9]{4})?$/g);
+  }
+
+  isInvalidState = (state?: string) => {
+    return !state?.match(/^(A[KLRZ]|C[AOT]|D[CE]|FL|GA|HI|I[ADLN]|K[SY]|LA|M[ADEINOST]|N[CDEHJMVY]|O[HKR]|PA|RI|S[CD]|T[NX]|UT|V[AT]|W[AIVY])?$/g);
+  }
+
   isFormValid = () => {
-    const { firstName, lastName, email } = this.state.updateUser;
-    return firstName && lastName && !this.isInvalidEmail(email);
+    const { firstName, lastName, email, phone, state } = this.state.updateUser;
+    return firstName && lastName && !this.isInvalidEmail(email)
+      && !this.isInvalidPhone(phone) && !this.isInvalidState(state);
   }
 
   render() {
     const currentUser = this.props.currentUser?.currentUser;
     const user = this.state?.updateUser;
+    const formValid= this.isFormValid();
 
     if (!currentUser?.isLoggedIn) {
       return <Redirect to="/" />;
@@ -131,7 +141,10 @@ class Profile extends React.Component<PProps, PState> {
             <Form onSubmit={this.handleProfileUpdatesubmit} noValidate>
               <Form.Row>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">First Name*</Form.Label>
+                  <Form.Label className="egym-section__form--label">
+                    First Name{' '}
+                    <span style={{ color: 'red' }}>*</span>
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
@@ -150,7 +163,10 @@ class Profile extends React.Component<PProps, PState> {
                   }
                 </FormGroup>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">Last Name*</Form.Label>
+                  <Form.Label className="egym-section__form--label">
+                    Last Name{' '}
+                    <span style={{ color: 'red' }}>*</span>
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
@@ -202,9 +218,20 @@ class Profile extends React.Component<PProps, PState> {
                     checked={user?.gender === 'F'}
                     onChange={this.handleProfileUpdateChange}
                   />
+                  <Form.Check
+                    type="radio"
+                    label="Other"
+                    name="gender"
+                    value="U"
+                    checked={user?.gender === 'U'}
+                    onChange={this.handleProfileUpdateChange}
+                  />
                 </FormGroup>
                 <FormGroup as={Col} lg={5}>
-                  <Form.Label className="egym-section__form--label">Email*</Form.Label>
+                  <Form.Label className="egym-section__form--label">
+                    Email{' '}
+                    <span style={{ color: 'red' }}>*</span>
+                  </Form.Label>
                   <Form.Control
                     type="email"
                     className="egym-section__form--input"
@@ -231,7 +258,13 @@ class Profile extends React.Component<PProps, PState> {
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
                     value={user?.phone ?? ''}
+                    isInvalid={this.isInvalidPhone(user?.phone)}
                   />
+                  {this.isInvalidPhone(user?.phone) &&
+                    <Form.Control.Feedback type='invalid'>
+                      Phone number is not valid
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
               </Form.Row>
               <br />
@@ -253,7 +286,7 @@ class Profile extends React.Component<PProps, PState> {
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
-                    placeholder="Your Street Address"
+                    placeholder="Apt, suite, etc."
                     name="streetAddress2"
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
@@ -285,7 +318,13 @@ class Profile extends React.Component<PProps, PState> {
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
                     value={user?.state ?? ''}
+                    isInvalid={this.isInvalidState(user?.state)}
                   />
+                  {this.isInvalidState(user?.state) &&
+                    <Form.Control.Feedback type='invalid'>
+                      State is not valid
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
                 <FormGroup as={Col} lg={2}>
                   <Form.Label className="egym-section__form--label">Zip Code</Form.Label>
@@ -297,8 +336,19 @@ class Profile extends React.Component<PProps, PState> {
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
                     value={user?.zip ?? ''}
+                    isInvalid={!user.zip?.match(/^([0-9]{5})?$/g)}
                   />
+                  {!user.zip?.match(/^([0-9]{5})?$/g) &&
+                    <Form.Control.Feedback type='invalid'>
+                      Zip code is not valid
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
+              </Form.Row>
+              <Form.Row>
+                <div>
+                  <span style={{ color: 'red' }}>*</span>{' '}Denotes required fields
+                </div>
               </Form.Row>
               <br />
               <Form.Row>
@@ -306,10 +356,10 @@ class Profile extends React.Component<PProps, PState> {
                   <Button
                     type="submit"
                     style={{
-                      pointerEvents: this.isFormValid ? 'none' : 'auto',
+                      pointerEvents: !formValid ? 'none' : 'auto',
                     }}
-                    variant={this.isFormValid ? 'danger' : 'primary'}
-                    disabled={!this.isFormValid}
+                    variant={!formValid ? 'danger' : 'primary'}
+                    disabled={!formValid}
                   >
                     Update
                   </Button>
