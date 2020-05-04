@@ -25,7 +25,6 @@ interface PState {
   currentUser?: CurrentUserState;
   user?: UserState;
   updateUser?: User;
-  errorsVisible?: boolean;
   updateSuccessful?: boolean;
   updateUserState?: UpdateUserState;
 }
@@ -33,7 +32,6 @@ interface PState {
 class Profile extends React.Component<PProps, PState> {
   state = {
     updateUser: {} as User,
-    errorVisible: false,
     updateSuccessful: false,
   }
 
@@ -90,11 +88,6 @@ class Profile extends React.Component<PProps, PState> {
     const userId = this.props?.currentUser?.currentUser?.id;
     this.props.updateUser(userId, this.state?.updateUser);
     e.preventDefault();
-    if (this.props.updateUserState?.error) {
-      this.setState({ errorsVisible: true }, () => this.state);
-    } else {
-      this.setState({ updateSuccessful: true });
-    }
   };
 
   handleBirthDateChange = (date: string) => {
@@ -102,6 +95,16 @@ class Profile extends React.Component<PProps, PState> {
     updateUser.birthDate = moment(date).format('YYYY-MM-DD');
     this.setState({ updateUser }, () => this.state);
   };
+
+  isInvalidEmail = (email?: string) => {
+    return email === '' ||
+      !email?.match(/^[A-Za-z]+[._-]?[A-Za-z0-9]*[@][A-Za-z0-9]{2,}\.[a-z]{2,6}$/g);
+  }
+
+  isFormValid = () => {
+    const { firstName, lastName, email } = this.state.updateUser;
+    return firstName && lastName && !this.isInvalidEmail(email);
+  }
 
   render() {
     const currentUser = this.props.currentUser?.currentUser;
@@ -125,17 +128,10 @@ class Profile extends React.Component<PProps, PState> {
           <Col lg={9} sm={12} className="content">
             <h1>Update Profile</h1>
             <br />
-            {this.state?.errorVisible &&
-              <Row>
-                <Alert variant='info'>
-                  {this.props?.updateUserState?.error}
-                </Alert>
-              </Row>
-            }
             <Form onSubmit={this.handleProfileUpdatesubmit} noValidate>
               <Form.Row>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">First Name</Form.Label>
+                  <Form.Label className="egym-section__form--label">First Name*</Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
@@ -145,10 +141,16 @@ class Profile extends React.Component<PProps, PState> {
                     onChange={this.handleProfileUpdateChange}
                     value={user?.firstName ?? ''}
                     autoFocus={true}
+                    isInvalid={user?.firstName === ''}
                   />
+                  {user?.firstName === '' &&
+                    <Form.Control.Feedback type='invalid'>
+                      First name cannot be blank
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
                 <FormGroup as={Col} lg={4}>
-                  <Form.Label className="egym-section__form--label">Last Name</Form.Label>
+                  <Form.Label className="egym-section__form--label">Last Name*</Form.Label>
                   <Form.Control
                     type="text"
                     className="egym-section__form--input"
@@ -157,7 +159,13 @@ class Profile extends React.Component<PProps, PState> {
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
                     value={user?.lastName ?? ''}
+                    isInvalid={user?.lastName === ''}
                   />
+                  {user?.lastName === '' &&
+                    <Form.Control.Feedback type='invalid'>
+                      Last name cannot be blank
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
                 <FormGroup as={Col} lg={4}>
                   <Form.Label as="div" className="egym-section__form--label">
@@ -196,7 +204,7 @@ class Profile extends React.Component<PProps, PState> {
                   />
                 </FormGroup>
                 <FormGroup as={Col} lg={5}>
-                  <Form.Label className="egym-section__form--label">Email</Form.Label>
+                  <Form.Label className="egym-section__form--label">Email*</Form.Label>
                   <Form.Control
                     type="email"
                     className="egym-section__form--input"
@@ -205,7 +213,13 @@ class Profile extends React.Component<PProps, PState> {
                     size="lg"
                     onChange={this.handleProfileUpdateChange}
                     value={user?.email ?? ''}
+                    isInvalid={this.isInvalidEmail(user?.email)}
                   />
+                  {this.isInvalidEmail(user?.email) &&
+                    <Form.Control.Feedback type='invalid'>
+                      Email address is not valid
+                    </Form.Control.Feedback>
+                  }
                 </FormGroup>
                 <FormGroup as={Col} lg={2}>
                   <Form.Label className="egym-section__form--label">Phone Number</Form.Label>
@@ -289,7 +303,14 @@ class Profile extends React.Component<PProps, PState> {
               <br />
               <Form.Row>
                 <FormGroup as={Col} style={{ textAlign: 'left' }}>
-                  <Button type="submit" variant="primary">
+                  <Button
+                    type="submit"
+                    style={{
+                      pointerEvents: this.isFormValid ? 'none' : 'auto',
+                    }}
+                    variant={this.isFormValid ? 'danger' : 'primary'}
+                    disabled={!this.isFormValid}
+                  >
                     Update
                   </Button>
                 </FormGroup>
