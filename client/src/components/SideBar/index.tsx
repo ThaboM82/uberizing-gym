@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCalendarAlt,
   faHome,
-  faIdCard,
   faRunning,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
