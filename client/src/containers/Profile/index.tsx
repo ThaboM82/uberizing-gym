@@ -88,6 +88,9 @@ class Profile extends React.Component<PProps, PState> {
     const userId = this.props?.currentUser?.currentUser?.id;
     this.props.updateUser(userId, this.state?.updateUser);
     e.preventDefault();
+    if (this.isFormValid()) {
+      this.setState({ updateSuccessful: true });
+    }
   };
 
   handleBirthDateChange = (date: string) => {
