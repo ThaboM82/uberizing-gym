@@ -17,7 +17,7 @@ services:
       - ./server/package.json:/app/package.json
       - ./server/tsconfig.json:/app/tsconfig.json
     ports:
-      - 3030:3030
+      - 80:3030
     links:
       - mysql
     networks:
