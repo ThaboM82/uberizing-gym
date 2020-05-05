@@ -11,7 +11,7 @@ interface HProps {
 
 const Header: React.FC<HProps> = ({ history, currentUser }: HProps) => (
   <Navbar collapseOnSelect expand="lg" className="navbar">
-    <Navbar.Brand className="navbar__logo" as={NavLink} to="/home">
+    <Navbar.Brand className="navbar__logo" as={NavLink} to="/dashboard">
       <img src={logo} alt="E Gym" />
     </Navbar.Brand>
   </Navbar>
