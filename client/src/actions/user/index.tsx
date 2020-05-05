@@ -12,7 +12,7 @@ export enum ActionType {
 export const registerUser = (userPayload: User) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = 'http://' + authUrl + ':3030/register-user';
+    const url = 'http://' + authUrl + '/register-user';
     const user = await axios.post(url, userPayload);
     dispatch({
       type: ActionType.SUCCESS,
@@ -29,7 +29,7 @@ export const registerUser = (userPayload: User) => async (dispatch: Dispatch) =>
 export const getUser = (id: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = `http://` + authUrl + `:3030/user/${id}`;
+    const url = `${authUrl}/user/${id}`;
     const user = await axios.get(url);
     dispatch({
       type: ActionType.SUCCESS,
@@ -46,7 +46,7 @@ export const getUser = (id: number) => async (dispatch: Dispatch) => {
 export const updateUser = (id: number, userPayload: User) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = `http://` + authUrl + `:3030/user/${id}`;
+    const url = `${authUrl}/user/${id}`;
     const user = await axios.post(url, userPayload);
     dispatch({
       type: ActionType.SUCCESS,
@@ -63,7 +63,7 @@ export const updateUser = (id: number, userPayload: User) => async (dispatch: Di
 export const getUserEvents = (id: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
   try {
-    const url = `http://` + authUrl + `:3030/user/${id}/events`;
+    const url = `${authUrl}/user/${id}/events`;
     const events = await axios.get(url);
     dispatch({
       type: ActionType.SUCCESS,

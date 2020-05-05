@@ -12,7 +12,7 @@ export const getAllGyms = (id?: number) => async (dispatch: Dispatch) => {
   dispatch({ type: ActionType.PENDING });
 
   try {
-    const gyms = await Axios.get(`http://${authUrl}:3030/all-gyms/${id}`);
+    const gyms = await Axios.get(`${authUrl}/all-gyms/${id}`);
     dispatch({
       type: ActionType.SUCCESS,
       payload: gyms?.data,
@@ -29,7 +29,7 @@ export const saveGym = (gymId: number, userId: number) => async (dispatch: Dispa
   dispatch({ type: ActionType.PENDING });
 
   try {
-    const gyms = await Axios.post(`http://${authUrl}:3030/save-gym`, { gymId, userId });
+    const gyms = await Axios.post(`${authUrl}/save-gym`, { gymId, userId });
     dispatch({
       type: ActionType.SUCCESS,
       payload: gyms?.data,
@@ -46,7 +46,7 @@ export const unsaveGym = (gymId: number, userId: number) => async (dispatch: Dis
   dispatch({ type: ActionType.PENDING });
 
   try {
-    const gyms = await Axios.post(`http://${authUrl}:3030/unsave-gym`, { gymId, userId });
+    const gyms = await Axios.post(`${authUrl}/unsave-gym`, { gymId, userId });
     dispatch({
       type: ActionType.SUCCESS,
       payload: gyms?.data,
@@ -63,7 +63,7 @@ export const searchGyms = (id?: number, payload?: { keyword?: string; location?:
   dispatch({ type: ActionType.PENDING });
 
   try {
-    const gyms = await Axios.post(`http://${authUrl}:3030/search-gyms/${id}`, payload);
+    const gyms = await Axios.post(`${authUrl}/search-gyms/${id}`, payload);
     dispatch({
       type: ActionType.SUCCESS,
       payload: gyms?.data,

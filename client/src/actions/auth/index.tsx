@@ -14,7 +14,7 @@ export const login = (username: string, password: string) => async (dispatch: Di
   dispatch({ type: Action.PENDING });
 
   try {
-    const url = 'http://' + authUrl + ':3030/login';
+    const url = `${authUrl}/login`;
     const token = await axios.post(url, { username, password });
     const decodedToken: any = jwt.decode(token?.data);
     const currentUser: CurrentUser = {
@@ -38,7 +38,7 @@ export const resetPassword = (username: string, password: string) => async (disp
   dispatch({ type: Action.PENDING });
 
   try {
-    const url = 'http://' + authUrl + ':3030/reset-password';
+    const url = `${authUrl}/reset-password`;
     const result = await axios.post(url, { username, password });
     dispatch({
       type: Action.SUCCESS,
